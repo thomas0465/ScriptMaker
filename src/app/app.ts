@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, NgModule, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, NgModule, OnInit, ViewChild, ChangeDetectorRef} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgxPrintDirective } from 'ngx-print';
 import { ColorPickerModule } from 'ngx-color-picker';
@@ -105,6 +105,8 @@ export class App implements OnInit, AfterViewInit {
   showFabled: boolean = false;
   showLoric: boolean = false;
 
+  proxiesExist: boolean = false;
+
   
 
   townsfolk: {
@@ -202,6 +204,26 @@ export class App implements OnInit, AfterViewInit {
     Image: string
   }[] = []
 
+  playablecharacters: {
+    ID: string,
+    Name: string,
+    Ability: string,
+    Team: string,
+    Image: string,
+    ProxyInput?: string,
+    Proxy?: string
+  }[] = []
+
+  proxies: {
+    ID: string,
+    Name: string,
+    Ability: string,
+    Team: string,
+    Image: string,
+    ProxyInput?: string,
+    Proxy?: string
+  }[] = []
+
   test: string = ''
 
   constructor(private cd: ChangeDetectorRef) { }
@@ -232,8 +254,8 @@ export class App implements OnInit, AfterViewInit {
     this.toggleFun(this.expandFont, this, 'expandFontToggle')
     this.toggleFun(this.expandOptions, this, 'expandOptionsToggle')
     this.toggleFun(this.expandColors, this, 'expandColorsToggle')
+    this.toggleFun(this.expandProxy, this, 'expandProxyToggle')
     this.toggleFun(this.expandJinx, this, 'expandJinxToggle')
-
 
 
   }
@@ -314,6 +336,14 @@ export class App implements OnInit, AfterViewInit {
   expandColorsFun() {
     this.expandColors = !this.expandColors
     this.toggleFun(this.expandColors, this, 'expandColorsToggle')
+  }
+
+  expandProxy: boolean = false;
+  expandProxyToggle = ''
+  expandProxyFun() {
+    this.expandProxy = !this.expandProxy
+    this.toggleFun(this.expandProxy, this, 'expandProxyToggle')
+
   }
 
   expandJinx: boolean = false;
@@ -797,6 +827,10 @@ export class App implements OnInit, AfterViewInit {
 
     this.goodcharacters = this.townsfolk.concat(this.outsiders)
 
+    this.playablecharacters = this.townsfolk.concat(this.outsiders).concat(this.minions).concat(this.demons)
+
+    this.setProxy()
+
 
     //---------------------------------------------
     //Jinxes - get array of jinxes
@@ -1101,25 +1135,56 @@ export class App implements OnInit, AfterViewInit {
   //--------------Other functions-----------------
 
   // Get image from charData by id
-  getImageForID(inputID: string): string {
+  getImageForID(inputID: string| undefined): string {
     const match = this.charData.find(item => item.ID === inputID);
     return match ? match.Image : "none";
   }
 
   getImage2ForID(inputID: string): string {
+    if(inputID !== ''){
     const match = this.charData.find(item => item.ID === inputID);
     return match ? (match.Image2 ? match.Image2 : "none") : "none";
+    }else{
+      return ''
+    }
   }
 
   // Get name from charData by id
-  getNameForID(inputID: string): string {
+  getNameForID(inputID: string | undefined): string {
     const match = this.charData.find(item => item.ID === inputID);
     return match ? match.Name : "none";
   }
 
   getIDForName(inputName: string): string {
     const match = this.charData.find(item => item.Name === inputName);
+    
     return match ? match.ID : "none";
+  }
+
+  getProxyForName(inputName: string): string {
+    const match = this.playablecharacters.find(item => item.Name === inputName);
+    return match ? (match.Proxy ? match.Proxy: ''): '';
+  }
+
+  setProxy(){
+    this.proxiesExist = false
+    this.proxies = []
+     for (let i = 0; i < this.playablecharacters.length; i++){
+        this.playablecharacters[i].Proxy = this.playablecharacters[i].ProxyInput?.toLowerCase().replace(" ","").replace("-","")
+
+        let out = this.playablecharacters[i].Proxy ?? ''
+
+        if(this.getNameForID(out) == 'none'){
+          this.playablecharacters[i].Proxy = ''
+        }else{
+          this.proxiesExist = true
+
+          this.proxies.push(this.playablecharacters[i])
+        }
+
+     }
+
+     this.proxies = this.reorderForColumns(this.proxies) 
   }
 
 

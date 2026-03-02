@@ -115,7 +115,8 @@
               <label class="form-check-label fs-4 mt-2" for="showBoot">Custom font:</label>
             </div>
             <div class="col-7">
-              <input class="form-control fs-5" type="file" accept=".ttf,.otf,.woff,.woff2" (change)="onFontUpload($event)" />
+              <input class="form-control fs-5" type="file" accept=".ttf,.otf,.woff,.woff2"
+                (change)="onFontUpload($event)" />
             </div>
           </div>
 
@@ -124,8 +125,8 @@
               <label class="form-check-label fs-4" for="showBoot">Title font size:</label>
             </div>
             <div class="col-6 mb-3">
-              <input type="number" min="0" step="1" [(ngModel)]="scriptFontSizeInput" (ngModelChange)="create()" rows="1"
-                class="form-control fs-4">
+              <input type="number" min="0" step="1" [(ngModel)]="scriptFontSizeInput" (ngModelChange)="create()"
+                rows="1" class="form-control fs-4">
             </div>
             <div class="col-1 mt-1">
               <button class="btn btn-secondary" (click)="resetScriptFontSize()">R</button>
@@ -137,22 +138,22 @@
               <label class="form-check-label fs-4" for="authorFontSize">Author font size:</label>
             </div>
             <div class="col-6 mb-3">
-              <input type="number" min="0" step="1" [(ngModel)]="authorFontSizeInput" (ngModelChange)="create()" rows="1"
-                class="form-control fs-4">
+              <input type="number" min="0" step="1" [(ngModel)]="authorFontSizeInput" (ngModelChange)="create()"
+                rows="1" class="form-control fs-4">
             </div>
             <div class="col-1 mt-1">
               <button class="btn btn-secondary" (click)="resetAuthorFontSize()">R</button>
             </div>
           </div>
-        
+
 
           <div class="row">
             <div class="col-5 mt-2">
               <label class="form-check-label fs-4" for="authorOffset">Author vertical offset:</label>
             </div>
             <div class="col-6 mb-3">
-              <input type="number" min="-20" step="1" [(ngModel)]="authorOffsetInput" (ngModelChange)="create()" rows="1"
-                class="form-control fs-4">
+              <input type="number" min="-20" step="1" [(ngModel)]="authorOffsetInput" (ngModelChange)="create()"
+                rows="1" class="form-control fs-4">
             </div>
             <div class="col-1 mt-1">
               <button class="btn btn-secondary" (click)="resetAuthorOffset()">R</button>
@@ -477,6 +478,8 @@
 
           }
 
+
+
           @if(allJinxes.length >= 1){
           <img src="divider.png" style="height:1px; width:100%" class="mt-3 mb-3">
           <div class="row mt-3 mb-2">
@@ -510,6 +513,27 @@
           </div>
           }
           }
+
+                    <img src="divider.png" style="height:1px; width:100%" class="mt-3 mb-3">
+          <div class="row mt-3 mb-2">
+
+            <div class="col">
+              <h5 class="card-title fs-3" (click)="expandProxyFun()">{{expandProxyToggle}} Set Proxy Tokens</h5>
+            </div>
+          </div>
+          @if(expandProxy){
+          @for(char of playablecharacters; track char){
+          <div class="row">
+            <div class="col-4 mt-2" style="text-align: right;">
+              <div>{{char.Name}}</div>
+            </div>
+            <div class=col-7>
+              <input type="text" class="form-control" (input)='create()' [(ngModel)]="char.ProxyInput">
+            </div>
+          </div>
+          }
+        }
+
           <img src="divider.png" style="height:1px; width:100%" class="mt-4 mb-4">
           <div class="row mt-3">
             <div class="col">
@@ -625,24 +649,16 @@
 
 
                   <!----Name and Author-->
-                  <div class="d-flex" 
-                  style="position:relative; width: auto; border:0px red solid"
-                  [style.left]="titleOffset">
-                    <div #TitleElement 
-                    class="ScriptName" 
-                    [style.font-family]="currentFont || 'Philo'" 
-                    [style.color]="scriptNameColor"
-                    [style.font-size]="scriptFontSize">
+                  <div class="d-flex" style="position:relative; width: auto; border:0px red solid"
+                    [style.left]="titleOffset">
+                    <div #TitleElement class="ScriptName" [style.font-family]="currentFont || 'Philo'"
+                      [style.color]="scriptNameColor" [style.font-size]="scriptFontSize">
                       {{scriptName}}
                     </div>
 
                     @if (author && !lowAuthor){
-                    <div #AuthorElement 
-                    class="Author" 
-                    [style.font-family]="currentFontAuthor || 'Philo'"
-                    [style.color]="scriptNameColor" 
-                    [style.font-size]="authorFontSize" 
-                    [style.bottom]="authorOffset">
+                    <div #AuthorElement class="Author" [style.font-family]="currentFontAuthor || 'Philo'"
+                      [style.color]="scriptNameColor" [style.font-size]="authorFontSize" [style.bottom]="authorOffset">
                       <div class="AuthorText">
                         @if(italicAuthor){
                         <i>by {{author}}</i>
@@ -654,20 +670,15 @@
                       </div>
                     </div>
                     }
-                    
+
 
 
                   </div>
                   @if (author && lowAuthor){
-                    <div style="position: relative;">
-                    <div #AuthorElement 
-                    class="Author"
-                    
-                    [style.font-family]="currentFontAuthor || 'Philo'"
-                    [style.color]="scriptNameColor" 
-                    [style.font-size]="authorFontSize" 
-                    [style.bottom]="authorOffset"
-                    [style.left]="authorLowOffset">
+                  <div style="position: relative;">
+                    <div #AuthorElement class="Author" [style.font-family]="currentFontAuthor || 'Philo'"
+                      [style.color]="scriptNameColor" [style.font-size]="authorFontSize" [style.bottom]="authorOffset"
+                      [style.left]="authorLowOffset">
                       <div class="AuthorText">
                         @if(italicAuthor){
                         <i>by {{author}}</i>
@@ -678,8 +689,8 @@
 
                       </div>
                     </div>
-                    </div>
-                    }
+                  </div>
+                  }
                 </div>
 
                 <!-----Bootlegger row page 1-->
@@ -746,7 +757,19 @@
                     }
                     }
                     }
+                    @if(getProxyForName(item.Name) != ''){
+                    <div class="proxy"><i>
+                        Proxy Token: {{getNameForID(getProxyForName(item.Name))}}
+                      </i>
+                    </div>
+                    <img src={{getImageForID(getProxyForName(item.Name))}}
+                      (error)="onImageError($event,getProxyForName(item.Name))" class="jinxIcon"
+                      style="height:25px; bottom:-3px; padding-right:60px; opacity:50%">
+
+                    }
                   </div>
+
+
                   <p class="charability" [style.line-height]="abilityLineHeight" [style.color]='goodAbilityColor'>
                     {{item.Ability}}</p>
                 </div>
@@ -778,6 +801,16 @@
                     <img src={{getImageForID(jinx.char2)}} class="jinxIcon" (error)="onImageError($event,jinx.char2)">
                     }
                     }
+                    }
+                    @if(getProxyForName(item.Name) != ''){
+                    <div class="proxy"><i>
+                        Proxy Token: {{getNameForID(getProxyForName(item.Name))}}
+                      </i>
+                    </div>
+                    <img src={{getImageForID(getProxyForName(item.Name))}}
+                      (error)="onImageError($event,getProxyForName(item.Name))" class="jinxIcon"
+                      style="height:25px; bottom:-3px; padding-right:60px; opacity:50%">
+
                     }
                   </div>
                   <p class="charability" [style.line-height]="abilityLineHeight" [style.color]='goodAbilityColor'>
@@ -811,6 +844,15 @@
                     <img src={{getImageForID(jinx.char2)}} class="jinxIcon" (error)="onImageError($event,jinx.char2)">
                     }
                     }
+                    } @if(getProxyForName(item.Name) != ''){
+                    <div class="proxy" ><i>
+                        Proxy Token: {{getNameForID(getProxyForName(item.Name))}}
+                      </i>
+                    </div>
+                    <img src={{getImageForID(getProxyForName(item.Name))}}
+                      (error)="onImageError($event,getProxyForName(item.Name))" class="jinxIcon"
+                      style="height:25px; bottom:-3px; padding-right:60px; opacity:50%">
+
                     }
                   </div>
                   <p class="charability" [style.line-height]="abilityLineHeight" [style.color]='evilAbilityColor'>
@@ -845,6 +887,16 @@
                     <img src={{getImageForID(jinx.char2)}} class="jinxIcon" (error)="onImageError($event,jinx.char2)">
                     }
                     }
+                    }
+                    @if(getProxyForName(item.Name) != ''){
+                    <div class="proxy"><i>
+                        Proxy Token: {{getNameForID(getProxyForName(item.Name))}}
+                      </i>
+                    </div>
+                    <img src={{getImageForID(getProxyForName(item.Name))}}
+                      (error)="onImageError($event,getProxyForName(item.Name))" class="jinxIcon"
+                      style="height:25px; bottom:-3px; padding-right:60px; opacity:50%">
+
                     }
                   </div>
                   <p class="charability" [style.line-height]="abilityLineHeight" [style.color]='evilAbilityColor'>
@@ -899,7 +951,6 @@
           </div>
           <footer class="footer">
             <i>
-
               <div class="footerText" style="float:right">
                 * Not the first night
               </div>
@@ -944,6 +995,42 @@
           {{scriptName}}</div>
 
         <div class="page2main">
+
+          <!--------Proxy Tokens------------------->
+          @if(proxiesExist){
+          <div class="divRowPage2" style="padding-top:20px">
+            <img style="background: black;" class="divPngPage2">
+
+            <div class="HeaderPage2" style="width:150px">
+              Proxy Tokens
+            </div>
+          </div>
+          <div class="proxyGrid" style="padding-bottom: 25px; padding-top:0px;">
+            @for(char of proxies; track char){
+            @if(char.Proxy !== ''){
+            <div class="npcRow" style="left:10px; bottom:-40px; padding-bottom:40px; width:310px">
+              <b style="padding-right: -5px; position: relative; bottom:25px;"></b>
+              <p> </p>
+              <div class="bootleggerRule" style="  display: flex;
+  flex-direction:row;">
+                <div>
+                  <b>
+                    <img src="{{getImageForID(char.ID)}}" class="jinxIcon">
+                    {{char.Name}}
+                  </b>
+                </div>
+                <div style="padding-left:5px"> is the </div>
+                <div>
+                  <b>
+                    <img src="{{getImageForID(char.Proxy)}}" class="jinxIcon">
+                    {{getNameForID(char.Proxy)}}</b> Token
+                </div>
+              </div>
+            </div>
+            }
+            }
+          </div>
+          }
           <!----- NPCs Header -->
           @if(showFabled || showLoric){
           <div class="divRowPage2" style="padding-top:20px">
@@ -1093,6 +1180,7 @@
           <!-----Player Count----->
           <div class="playerCountContainer" #playerCountContainer>
 
+
             @if(showPlayerCount){
             <img class="playerCountImage" src=playercount.png>
             }
@@ -1103,20 +1191,20 @@
                 <img src={{char.Image}} class="charImageBottom" (error)="onImageError($event,char.ID)">
                 }
 
-                <img src=divider.png style="opacity: 0;" class="charImageBottom">
+                <img src=divider.png style="opacity: 0; width:24px" class="charImageBottom">
 
                 @for(char of outsiders; track char){
 
                 <img src={{char.Image}} class="charImageBottom" (error)="onImageError($event,char.ID)">
                 }
 
-                <img src=divider.png style="opacity: 0;" class="charImageBottom">
+                <img src=divider.png style="opacity: 0; width:24px" class="charImageBottom">
 
                 @for(char of minions; track char){
                 <img src={{char.Image}} class="charImageBottom" (error)="onImageError($event,char.ID)">
                 }
 
-                <img src=divider.png style="opacity: 0;" class="charImageBottom">
+                <img src=divider.png style="opacity: 0; width:24px" class="charImageBottom">
 
                 @for(char of demons; track char){
                 <img src={{char.Image}} class="charImageBottom" (error)="onImageError($event,char.ID)">
@@ -1131,6 +1219,7 @@
 
 
         }
+
 
       </div>
 
