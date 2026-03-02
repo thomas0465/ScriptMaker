@@ -373,7 +373,7 @@ export class App implements OnInit, AfterViewInit {
       this.stormcaught = 'none'
       this.stormcaughtName = 'none'
       this.hbexists = false
-      this.hbmark = ''
+      //this.hbmark = ''
 
       this.create();
       
@@ -403,7 +403,7 @@ export class App implements OnInit, AfterViewInit {
     this.stormcaught = 'none'
     this.stormcaughtName = 'none'
     this.hbexists = false
-    this.hbmark = ''
+    //this.hbmark = ''
 
       this.jsonInput = ''
       this.jsonInput = reader.result as string;
@@ -746,7 +746,7 @@ export class App implements OnInit, AfterViewInit {
       //if json item has id 
       if (this.fullJsonSplit[i].id) {
 
-        //if id is already in array
+        //if id and ability is already in array
         if (this.charData.find(innerArray =>
           innerArray.Ability === this.fullJsonSplit[i].ability && innerArray.ID === this.fullJsonSplit[i].id)) {
 
@@ -788,6 +788,10 @@ export class App implements OnInit, AfterViewInit {
               this.hbimage = this.hbchar.image
             }
 
+            //if hbmark is already set
+            if(this.hbmark != ''){
+              this.hbchar.name = this.hbchar.name + " " + this.hbmark
+            }
 
             //add hb char to charData
             this.charData.push({
@@ -813,7 +817,7 @@ export class App implements OnInit, AfterViewInit {
                 )
               }
             }
-            
+
             //add to night order
 
             if (this.hbchar.firstNight > 0) {
