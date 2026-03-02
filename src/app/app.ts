@@ -773,14 +773,15 @@ export class App implements OnInit, AfterViewInit {
 
           this.characters.push(this.hbchar.id)
 
-          // if HB char
-          if(this.hbchar.hasOwnProperty("ability")){
+          // if HB char, json split has id and ability
+          if(this.hbchar.ability){
 
+            //fix if team is misspelled
             if (this.hbchar.team == 'traveler') {
               this.hbchar.team = 'traveller'
             }
       
-
+            //set image, if more than one choose the first
             if(this.hbchar.image instanceof Array){
               this.hbimage = this.hbchar.image[0]
             }else{
@@ -788,7 +789,7 @@ export class App implements OnInit, AfterViewInit {
             }
 
 
-            //add hb char to charData and characters array
+            //add hb char to charData
             this.charData.push({
               ID: this.hbchar.id,
               Name: this.hbchar.name,
@@ -811,8 +812,8 @@ export class App implements OnInit, AfterViewInit {
                   }
                 )
               }
-
             }
+            
             //add to night order
 
             if (this.hbchar.firstNight > 0) {
