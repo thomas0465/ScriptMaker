@@ -743,6 +743,13 @@ export class App implements OnInit, AfterViewInit {
           if (this.hbchar.team == 'traveler') {
             this.hbchar.team = 'traveller'
           }
+		
+		let hbimage = ''
+	if(this.hbchar.image[0]){
+		hbimage= this.hbchar.image[0]
+	}else{
+		hbimage = this.hbchar.image
+	}
 
           //add hb char to charData and characters array
           this.charData.push({
@@ -750,8 +757,8 @@ export class App implements OnInit, AfterViewInit {
             Name: this.hbchar.name,
             Ability: this.hbchar.ability,
             Team: this.hbchar.team,
-            Image: this.hbchar.image[0],
-            Image2: this.hbchar.image[0],
+            Image: hbimage,
+            Image2: hbimage,
           });
 
           this.characters.push(this.hbchar.id)
