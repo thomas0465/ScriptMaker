@@ -97,6 +97,7 @@ export class App implements OnInit, AfterViewInit {
 
   centerTitle: boolean = false
   lowAuthor: boolean = false
+  titleWidth: string ='auto'
 
   abilityLineHeight: string = '1.2';
   italicAuthor: boolean = false;
@@ -296,6 +297,7 @@ export class App implements OnInit, AfterViewInit {
 
     this.centerTitle = false
     this.lowAuthor = false
+    this.titleWidth = 'auto'
 
     this.create()
   }
@@ -1142,10 +1144,13 @@ export class App implements OnInit, AfterViewInit {
 
       this.authorLowOffset = 390 - (this.AuthorElement.nativeElement.offsetWidth / 2) + 'px'
 
+      this.titleWidth = 390 + (this.TitleElement.nativeElement.offsetWidth / 2) + 'px'
+
     } else {
       //if title left aligned
       this.titleOffset = '0px'
       this.authorLowOffset = '10px'
+      this.titleWidth = 'auto'
     }
 
 

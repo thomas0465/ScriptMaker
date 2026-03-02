@@ -649,8 +649,9 @@
 
 
                   <!----Name and Author-->
-                  <div class="d-flex" style="position:relative; width: auto; border:0px red solid"
-                    [style.left]="titleOffset">
+                  <div class="d-flex" style="position:relative; border:0px red solid"
+                    [style.left]="titleOffset"
+                    [style.width]="titleWidth">
                     <div #TitleElement class="ScriptName" [style.font-family]="currentFont || 'Philo'"
                       [style.color]="scriptNameColor" [style.font-size]="scriptFontSize">
                       {{scriptName}}
