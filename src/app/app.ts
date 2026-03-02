@@ -865,7 +865,7 @@ export class App implements OnInit, AfterViewInit {
     //loric
     this.loric = this.npcs.filter(item => item.Team === 'loric')
 
-    if (this.npcs.filter(item => item.Team === 'loric').length > 0) {
+    if (this.npcs.filter(item => item.Team === 'loric').length > 0 || this.bootlegger.length > 0) {
       this.showLoric = true
     } else {
       this.showLoric = false
