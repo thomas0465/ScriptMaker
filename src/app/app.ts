@@ -397,7 +397,8 @@ export class App implements OnInit, AfterViewInit {
 
     this.loadJson()
     this.loadParams()
-    this.create()
+
+    
 
 
   }
@@ -1248,10 +1249,12 @@ loadJson(){
     }
 
     //if title is centered
-    if (this.centerTitle) {
+    if (this.centerTitle && this.TitleElement) {
       this.titleOffset = 390 - (this.TitleElement.nativeElement.offsetWidth / 2) + 'px'
 
-      this.authorLowOffset = 390 - (this.AuthorElement.nativeElement.offsetWidth / 2) + 'px'
+      if(this.AuthorElement){
+        this.authorLowOffset = 390 - (this.AuthorElement.nativeElement.offsetWidth / 2) + 'px'
+      }
 
       this.titleWidth = 390 + (this.TitleElement.nativeElement.offsetWidth / 2) + 'px'
 
@@ -1623,6 +1626,8 @@ loadJson(){
     if (this.fullJsonSplit[0].proxies) {
         this.loadProxies = this.fullJsonSplit[0].proxies
     }
+
+
 
 
   }
