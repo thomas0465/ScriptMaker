@@ -215,9 +215,9 @@ export class App implements OnInit, AfterViewInit {
   playablecharacters: {
     ID: string,
     Name: string,
-    Ability: string,
-    Team: string,
-    Image: string,
+    Ability?: string,
+    Team?: string,
+    Image?: string,
     ProxyInput?: string,
     Proxy?: string
   }[] = []
@@ -225,9 +225,19 @@ export class App implements OnInit, AfterViewInit {
   proxies: {
     ID: string,
     Name: string,
-    Ability: string,
-    Team: string,
-    Image: string,
+    Ability?: string,
+    Team?: string,
+    Image?: string,
+    ProxyInput?: string,
+    Proxy?: string
+  }[] = []
+
+  loadProxies: {
+    ID: string,
+    Name: string,
+    Ability?: string,
+    Team?: string,
+    Image?: string,
     ProxyInput?: string,
     Proxy?: string
   }[] = []
@@ -318,7 +328,7 @@ export class App implements OnInit, AfterViewInit {
     obj[toggle] = bool ? '▵' : '▿';
   }
 
-  expandJson: boolean = false;
+  expandJson: boolean = true;
   expandJsonToggle = ''
   expandJsonFun() {
     this.expandJson = !this.expandJson
@@ -385,7 +395,10 @@ export class App implements OnInit, AfterViewInit {
     this.hbexists = false
     //this.hbmark = ''
 
-    this.create();
+    this.loadJson()
+    this.loadParams()
+    this.create()
+
 
   }
 
@@ -410,12 +423,11 @@ export class App implements OnInit, AfterViewInit {
 
       this.jsonInput = ''
       this.jsonInput = reader.result as string;
-      try {
-        this.create()
-      }
-      catch (error) {
-        this.create()
-      }
+
+      this.loadJson()
+      this.loadParams()
+      this.create()
+
     };
 
 
@@ -434,6 +446,8 @@ export class App implements OnInit, AfterViewInit {
   charFont: boolean = false;
   npcFont: boolean = false;
   fontName: string = ''
+  fontRef: string = ''
+  base64:string = ''
 
   onFontUpload(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -443,14 +457,15 @@ export class App implements OnInit, AfterViewInit {
     const reader = new FileReader();
 
     reader.onload = () => {
-      const base64 = reader.result as string;
+      this.base64 = reader.result as string;
       this.fontName = file.name.replace(/\.[^/.]+$/, '').replace(/\s+/g, '-').replace(".", "").replace("(", "").replace(")", "").replace("!", "");
+      this.fontRef = this.fontName
 
       const style = document.createElement('style');
       style.innerHTML = `
         @font-face {
           font-family: '${this.fontName}';
-          src: url('${base64}');
+          src: url('${this.base64}');
         }
       `;
 
@@ -652,20 +667,6 @@ export class App implements OnInit, AfterViewInit {
     this.evilAbilityColor = '#000000'
   }
 
-  /*
-  randomizeColors(){
-    this.randomColor('scriptNameColor')
-    this.randomColor('goodCharColor')
-    this.randomColor('evilCharColor')
-    this.randomColor('goodAbilityColor')
-    this.randomColor('evilAbilityColor')
-    this.randomColor('fabledColor')
-    this.randomColor('loricColor')
-    this.randomColor('travColor')
-    this.randomColor('divColor')
-  }
-*/
-
   randomColor(inputColor: string) {
     let color = '#';
     const letters = '0123456789ABCDEF'
@@ -676,13 +677,31 @@ export class App implements OnInit, AfterViewInit {
     (this as any)[inputColor] = color
   }
 
+//-------------------------------------------
+ async saveJson() {
+
+  this.saveParams();
+  
+  let data = this.fullJsonSplit
+
+  const json = JSON.stringify(data, null, 2);
+
+  const handle = await (window as any).showSaveFilePicker({
+    suggestedName: this.scriptName + '.json',
+    types: [{
+      description: 'JSON File',
+      accept: { 'application/json': ['.json'] }
+    }]
+  });
+
+  const writable = await handle.createWritable();
+  await writable.write(json);
+  await writable.close();
+}
 
 
-
-
-  //Create
-  //---------------------------------------------------------
-  create() {
+//------------------------------------------
+loadJson(){
     try {
       this.fullJsonSplit = JSON.parse(this.jsonInput)
       this.jsonError = false
@@ -693,6 +712,12 @@ export class App implements OnInit, AfterViewInit {
       this.cd.detectChanges();
       return
     }
+}
+
+  //Create
+  //---------------------------------------------------------
+  create() {
+    this.loadJson()
 
     //Set fonts
     if (this.titleFont && this.fontName) {
@@ -934,7 +959,30 @@ export class App implements OnInit, AfterViewInit {
 
     this.goodcharacters = this.townsfolk.concat(this.outsiders)
 
-    this.playablecharacters = this.townsfolk.concat(this.outsiders).concat(this.minions).concat(this.demons)
+    this.playablecharacters = this.loadProxies.concat(this.townsfolk).concat(this.outsiders).concat(this.minions).concat(this.demons)
+
+    const seen = new Set();
+
+    this.playablecharacters = this.playablecharacters.filter(item => {
+      if (seen.has(item.ID)) {
+        return false;
+      }
+      seen.add(item.ID);
+      return true;
+    });
+
+    const orderMap = new Map(
+    this.characters.map((id, index) => [id, index])
+    );
+
+    this.playablecharacters.sort((a, b) => {
+      return (
+        (orderMap.get(a.ID) ?? Infinity) -
+        (orderMap.get(b.ID) ?? Infinity)
+      );
+    });
+
+
 
     this.setProxy()
 
@@ -1293,6 +1341,9 @@ export class App implements OnInit, AfterViewInit {
     this.proxiesExist = false
     this.proxies = []
     for (let i = 0; i < this.playablecharacters.length; i++) {
+
+
+
       this.playablecharacters[i].Proxy = this.playablecharacters[i].ProxyInput?.toLowerCase().replace(" ", "").replace("-", "").replace("'", "")
 
       let out = this.playablecharacters[i].Proxy ?? ''
@@ -1302,7 +1353,14 @@ export class App implements OnInit, AfterViewInit {
       } else {
         this.proxiesExist = true
 
-        this.proxies.push(this.playablecharacters[i])
+        this.proxies.push({
+          ID: this.playablecharacters[i].ID,
+          Name: this.playablecharacters[i].Name,
+          Proxy: this.playablecharacters[i].Proxy,
+          ProxyInput: this.playablecharacters[i].ProxyInput
+
+        }
+      )
       }
 
     }
@@ -1344,8 +1402,232 @@ export class App implements OnInit, AfterViewInit {
   }
 
   //-------------------------------------------
-  //data---------------
+  //save and load from json---------------
+  saveParams(){
+    if(this.imageSelection !== 'SVG'){
+      this.fullJsonSplit[0]["imageSelection"] = this.imageSelection
+    }
 
+    //font name only for refrence, not saved with json
+    if(this.fontName){
+      this.fullJsonSplit[0]["fontName"] = this.fontName
+    }
+    if(this.scriptFontSizeInput !== 34){
+      this.fullJsonSplit[0]["scriptFontSizeInput"] = this.scriptFontSizeInput
+    }
+    if(this.authorFontSizeInput !== 17){
+      this.fullJsonSplit[0]["authorFontSizeInput"] = this.authorFontSizeInput
+    }
+    if(this.authorOffsetInput !== 10){
+      this.fullJsonSplit[0]["authorOffsetInput"] = this.authorOffsetInput
+    }
+    if(this.centerTitle !== false){
+      this.fullJsonSplit[0]["centerTitle"] = this.centerTitle
+    }
+    if(this.lowAuthor !== false){ 
+      this.fullJsonSplit[0]["lowAuthor"] = this.lowAuthor
+    }
+    if(this.italicAuthor !== false){ 
+      this.fullJsonSplit[0]["italicAuthor"] = this.italicAuthor
+    }
+    if(this.titleFont !== true){ 
+      this.fullJsonSplit[0]["titleFont"] = this.titleFont;
+    }
+    if(this.authorFont !== true){
+      this.fullJsonSplit[0]["authorFont"] = this.authorFont;
+    }
+    if(this.charFont !== false){
+      this.fullJsonSplit[0]["charFont"] = this.charFont;
+    }
+    if(this.npcFont !== false){
+      this.fullJsonSplit[0]["npcFont"] = this.npcFont;
+    }
+
+    if(this.stormcaughtName !== 'none'){
+      this.fullJsonSplit[0]["stormcaughtName"] = this.stormcaughtName;
+    }
+    if(this.showBoot !== 'none'){
+      this.fullJsonSplit[0]["showBoot"] = this.showBoot;
+    }
+    if(this.hbmark !== ''){
+      this.fullJsonSplit[0]["hbmark"] = this.hbmark;
+    }
+    if(this.showDjinn !== false){
+      this.fullJsonSplit[0]["showDjinn"] = this.showDjinn;
+    }
+    if(this.showNpcNames !== true){
+      this.fullJsonSplit[0]["showNpcNames"] = this.showNpcNames;
+    }
+    if(this.invertOther !== false){
+      this.fullJsonSplit[0]["invertOther"] = this.invertOther;
+    }
+    if(this.showPlayerCount !== true){  
+      this.fullJsonSplit[0]["showPlayerCount"] = this.showPlayerCount;
+    }
+    if(this.showCharBottom !== true){
+      this.fullJsonSplit[0]["showCharBottom"] = this.showCharBottom;
+    }
+    if(this.iconsAbove !== true){
+      this.fullJsonSplit[0]["iconsAbove"] = this.iconsAbove;
+    }
+    
+    if(this.scriptNameColor !== '#800000'){
+      this.fullJsonSplit[0]["scriptNameColor"] = this.scriptNameColor;
+    }
+    if(this.divTopColor !== '#000000'){
+      this.fullJsonSplit[0]["divTopColor"] = this.divTopColor;
+    }
+    if(this.divBottomColor !== '#000000'){
+      this.fullJsonSplit[0]["divBottomColor"] = this.divBottomColor;
+    }
+    if(this.goodCharColor !== '#0b6aaf'){
+      this.fullJsonSplit[0]["goodCharColor"] = this.goodCharColor;
+    }
+    if(this.evilCharColor !== '#760A0D'){
+      this.fullJsonSplit[0]["evilCharColor"] = this.evilCharColor;
+    }
+    if(this.goodAbilityColor !== '#000000'){
+      this.fullJsonSplit[0]["goodAbilityColor"] = this.goodAbilityColor;
+    }
+    if(this.evilAbilityColor !== '#000000'){
+      this.fullJsonSplit[0]["evilAbilityColor"] = this.evilAbilityColor;
+    }
+    if(this.fabledColor !== '#7a6550'){
+      this.fullJsonSplit[0]["fabledColor"] = this.fabledColor;
+    }
+    if(this.loricColor !== '#6f854d'){
+      this.fullJsonSplit[0]["loricColor"] = this.loricColor;
+    }
+    if(this.travColor !== '#500050'){
+      this.fullJsonSplit[0]["travColor"] = this.travColor;
+    }
+
+    if(this.addBootRule !== true){
+      this.fullJsonSplit[0]["addBootRule"] = this.addBootRule;
+    }
+    if(this.dontShowJinxes.length > 0 ){
+      this.fullJsonSplit[0]["dontShowJinxes"] = this.dontShowJinxes
+    }
+    if(this.proxiesExist){
+      this.fullJsonSplit[0]["proxies"] = this.proxies
+    }
+
+  }
+
+
+    
+  loadParams(){
+    this.reset()
+
+    if(this.fullJsonSplit[0].fontName){
+      this.fontRef = this.fullJsonSplit[0].fontName
+    }
+    
+    if(this.fullJsonSplit[0].imageSelection){
+      this.imageSelection = this.fullJsonSplit[0].imageSelection
+    }
+    if(this.fullJsonSplit[0].scriptFontSizeInput){
+      this.scriptFontSizeInput = this.fullJsonSplit[0].scriptFontSizeInput
+    }
+    if(this.fullJsonSplit[0].authorFontSizeInput){
+      this.authorFontSizeInput = this.fullJsonSplit[0].authorFontSizeInput
+    }
+    if(this.fullJsonSplit[0].authorOffsetInput){
+      this.authorOffsetInput = this.fullJsonSplit[0].authorOffsetInput
+    }
+    if(this.fullJsonSplit[0].centerTitle !== undefined){
+      this.centerTitle = this.fullJsonSplit[0].centerTitle
+    }
+    if(this.fullJsonSplit[0].lowAuthor !== undefined){
+      this.lowAuthor = this.fullJsonSplit[0].lowAuthor
+    }
+    if(this.fullJsonSplit[0].italicAuthor !== undefined){
+      this.italicAuthor = this.fullJsonSplit[0].italicAuthor
+    }
+    if (this.fullJsonSplit[0].titleFont !== undefined) {
+      this.titleFont = this.fullJsonSplit[0].titleFont;
+    }
+    if (this.fullJsonSplit[0].authorFont !== undefined) {
+      this.authorFont = this.fullJsonSplit[0].authorFont;
+    }
+    if (this.fullJsonSplit[0].charFont !== undefined) {
+      this.charFont = this.fullJsonSplit[0].charFont;
+    }
+    if (this.fullJsonSplit[0].npcFont !== undefined) {
+      this.npcFont = this.fullJsonSplit[0].npcFont;
+    }
+    if (this.fullJsonSplit[0].stormcaughtName) {
+      this.stormcaughtName = this.fullJsonSplit[0].stormcaughtName;
+    }
+    if (this.fullJsonSplit[0].showBoot !== undefined) {
+      this.showBoot = this.fullJsonSplit[0].showBoot;
+    }
+    if (this.fullJsonSplit[0].hbmark) {
+      this.hbmark = this.fullJsonSplit[0].hbmark;
+    }
+    if (this.fullJsonSplit[0].showDjinn !== undefined) {
+      this.showDjinn = this.fullJsonSplit[0].showDjinn;
+    }
+    if (this.fullJsonSplit[0].showNpcNames !== undefined) {
+      this.showNpcNames = this.fullJsonSplit[0].showNpcNames;
+    }
+    if (this.fullJsonSplit[0].invertOtherNight !== undefined) {
+      this.invertOther = this.fullJsonSplit[0].invertOther;
+    }
+    if (this.fullJsonSplit[0].showPlayerCount !== undefined) {
+      this.showPlayerCount = this.fullJsonSplit[0].showPlayerCount;
+    }
+    if (this.fullJsonSplit[0].showCharBottom !== undefined) {
+      this.showCharBottom = this.fullJsonSplit[0].showCharBottom;
+    }
+    if (this.fullJsonSplit[0].iconsAbove !== undefined) {
+      this.iconsAbove = this.fullJsonSplit[0].iconsAbove;
+    }
+    if (this.fullJsonSplit[0].scriptNameColor) {
+      this.scriptNameColor = this.fullJsonSplit[0].scriptNameColor;
+    }
+    if (this.fullJsonSplit[0].divTopColor) {
+      this.divTopColor = this.fullJsonSplit[0].divTopColor;
+    }
+    if (this.fullJsonSplit[0].divBottomColor) {
+      this.divBottomColor = this.fullJsonSplit[0].divBottomColor;
+    }
+    if (this.fullJsonSplit[0].goodCharColor) {
+      this.goodCharColor = this.fullJsonSplit[0].goodCharColor;
+    }
+    if (this.fullJsonSplit[0].evilCharColor) {
+      this.evilCharColor = this.fullJsonSplit[0].evilCharColor;
+    }
+    if (this.fullJsonSplit[0].goodAbilityColor) {
+      this.goodAbilityColor = this.fullJsonSplit[0].goodAbilityColor;
+    }
+    if (this.fullJsonSplit[0].evilAbilityColor) {
+      this.evilAbilityColor = this.fullJsonSplit[0].evilAbilityColor;
+    }
+    if (this.fullJsonSplit[0].fabledColor) {
+      this.fabledColor = this.fullJsonSplit[0].fabledColor;
+    }
+    if (this.fullJsonSplit[0].loricColor) {
+      this.loricColor = this.fullJsonSplit[0].loricColor;
+    }
+    if (this.fullJsonSplit[0].travColor) {
+      this.travColor = this.fullJsonSplit[0].travColor;
+    }
+    if (this.fullJsonSplit[0].addBootRule !== undefined) {
+      this.addBootRule = this.fullJsonSplit[0].addBootRule;
+    }
+    if (this.fullJsonSplit[0].dontShowJinxes) {
+      this.dontShowJinxes = this.fullJsonSplit[0].dontShowJinxes;
+    }
+    this.loadProxies = []
+    if (this.fullJsonSplit[0].proxies) {
+        this.loadProxies = this.fullJsonSplit[0].proxies
+    }
+
+
+  }
+
+  //data
 
   charData: {
     ID: string,
