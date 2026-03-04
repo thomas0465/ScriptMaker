@@ -1290,7 +1290,12 @@ loadJson(){
       this.offsetPlayerCount = '-28px'
       this.offsetCharBottom = '162px'
     } else {
-      this.offsetPlayerCount = '5px'
+      if(this.showCharBottom){
+        this.offsetPlayerCount = '5px'
+      }else{
+        this.offsetPlayerCount = '-28px'
+      }
+      
       this.offsetCharBottom = '-28px'
     }
 
