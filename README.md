@@ -7,17 +7,23 @@ For any feedback or questions, contact @Thomas04 on the Unoffical BOTC discord.
 #### https://madness-script-maker.vercel.app
 
 ## Features
-* Full homebrew support
-
 * Upload a custom font file that can be used for the title, author, and character names.
 
 * Choose between Unofficial PNG, SVG or your external character images
 
 * Change title and author font size
 
+* Options to center the title, and show author under the title
+
 * Show Stormcaught character on the script like a jinx. Stormcaught character will also be indicated on the back page under Storm Catcher
 
 * Show Bootlegger rules at the top or bottom of the script
+
+* Full homebrew support
+
+* Add a custom text mark next to homebrew characters
+
+* Assign proxy tokens for characters to show on the script and back page
 
 * Toggle showing Djinn on script page
 
