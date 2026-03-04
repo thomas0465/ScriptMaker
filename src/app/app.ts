@@ -1286,16 +1286,23 @@ loadJson(){
       this.titleWidth = 'auto'
     }
 
+    //offsets for player count and icon row
+    //if icons above and player count visible
     if (this.iconsAbove && this.showPlayerCount) {
       this.offsetPlayerCount = '-28px'
       this.offsetCharBottom = '162px'
     } else {
+
+    //if icon row visible set player count above it
       if(this.showCharBottom){
         this.offsetPlayerCount = '5px'
       }else{
+
+    //if icon row not visible, set player count to bottom
         this.offsetPlayerCount = '-28px'
       }
       
+    //set icon row to bottom
       this.offsetCharBottom = '-28px'
     }
 
