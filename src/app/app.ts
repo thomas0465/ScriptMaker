@@ -304,7 +304,7 @@ export class App implements OnInit, AfterViewInit {
     this.authorOffset = '10px'
 
     this.italicAuthor = false;
-    this.fontName = ''
+    //this.fontName = ''
     this.authorFont = true;
     this.titleFont = true;
     this.charFont = false;
@@ -1187,17 +1187,21 @@ loadJson(){
         hiddenJinxes[hiddenJinxes.length - 1];
     }
 
-    let index = this.bootlegger.indexOf(this.hiddenJinxesString = "Do not use the " + this.hiddenJinxesString + " jinx.");
+    console.log("hiddenjinxesstring: " + this.hiddenJinxesString)
+
+    let index = this.bootlegger.indexOf("Do not use the " + this.hiddenJinxesString + " jinx.");
 
       if (index !== -1) {
         this.bootlegger.splice(index, 1);
       }
 
-      let index2 = this.bootlegger.indexOf(this.hiddenJinxesString = "Do not use the " + this.hiddenJinxesString + " jinxes.");
 
-      if (index !== -1) {
+      let index2 = this.bootlegger.indexOf("Do not use the " + this.hiddenJinxesString + " jinxes.");
+
+      if (index2 !== -1) {
         this.bootlegger.splice(index2, 1);
       }
+
 
 
     if (this.dontShowJinxes.length > 1 && this.addBootRule) {
@@ -1209,6 +1213,8 @@ loadJson(){
 
       this.bootlegger.push(this.hiddenJinxesString)
     }
+
+    console.log(this.hiddenJinxesString)
 
 
   }
@@ -2985,9 +2991,23 @@ loadJson(){
         "Image": ""
       },
       {
+        "ID": "godofug",
+        "Name": "God of Ug",
+        "Ability": "One Ug hat. When wear Ug hat, must speak one sound at a time but vote twice. If fail, pass Ug hat.",
+        "Team": "loric",
+        "Image": ""
+      },
+      {
         "ID": "hindu",
         "Name": "Hindu",
         "Ability": "The first 4 players to die are immediately reincarnated as Travellers of the same alignment.",
+        "Team": "loric",
+        "Image": ""
+      },
+      {
+        "ID": "knaves",
+        "Name": "Knaves",
+        "Ability": "There are 2 Storytellers: one lies & one tells the truth. Once per game, at dusk, they might switch.",
         "Team": "loric",
         "Image": ""
       },
