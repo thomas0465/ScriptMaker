@@ -470,7 +470,7 @@ export class App implements OnInit, AfterViewInit {
     const file = input.files[0];
     const reader = new FileReader();
 
-    reader.onload = () => {
+    reader.onload = async () => {
       this.base64 = reader.result as string;
       this.fontName = file.name.replace(/\.[^/.]+$/, '').replace(/\s+/g, '-').replace(".", "").replace("(", "").replace(")", "").replace("!", "");
       this.fontRef = this.fontName
@@ -507,6 +507,10 @@ export class App implements OnInit, AfterViewInit {
         this.currentFontNpc = 'Assi'
       }
       this.create();
+      await document.fonts.ready;
+      if(this.centerTitle){
+        this.create()
+      }
     };
 
     reader.readAsDataURL(file);
@@ -1360,6 +1364,9 @@ loadJson(){
   resetScriptFontSize() {
     this.scriptFontSizeInput = 34
     this.create()
+    if(this.centerTitle){
+        this.updateCSS()
+    }
   }
 
   resetAuthorFontSize() {
