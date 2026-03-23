@@ -466,6 +466,7 @@ export class App implements OnInit, AfterViewInit {
   onFontUpload(event: Event) {
     const input = event.target as HTMLInputElement;
     if (!input.files?.length) return;
+    
 
     const file = input.files[0];
     const reader = new FileReader();
@@ -511,6 +512,7 @@ export class App implements OnInit, AfterViewInit {
       if(this.centerTitle){
         this.create()
       }
+
     };
 
     reader.readAsDataURL(file);
@@ -1378,7 +1380,17 @@ loadJson(){
     this.authorOffsetInput = 10
     this.create()
   }
+  @ViewChild('fontinput') fontinput!: ElementRef<HTMLInputElement>;
 
+
+  
+  resetFont() {
+    this.fontName = ''
+    this.fontRef = ''
+    this.base64 = ''
+    this.fontinput.nativeElement.value = '';
+    this.create()
+  }
 
 
 

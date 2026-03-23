@@ -124,12 +124,20 @@
           @if(expandFont){
           <div class="row">
             <div class="col-5">
-              <label class="form-check-label fs-4 mt-2" for="showBoot">Custom font: <br>{{fontRef}}</label>
+              <label class="form-check-label fs-4 mt-2" for="showBoot">Custom font: <br></label>
             </div>
-            <div class="col-7">
-              <input class="form-control fs-5" type="file" accept=".ttf,.otf,.woff,.woff2"
+            <div class="col-6">
+              <input class="form-control fs-5" type="file" accept=".ttf,.otf,.woff,.woff2" #fontinput
                 (change)="onFontUpload($event)" />
             </div>
+            <div class="col-1 mt-1">
+              <button class="btn btn-secondary" (click)="resetFont()">R</button>
+            </div>
+          </div>
+          <div class="row form-check-label fs-4 mt-2">
+            <div class="col">
+            {{fontRef}}
+          </div>
           </div>
 
           <div class="row mt-3">
