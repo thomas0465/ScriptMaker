@@ -535,7 +535,7 @@
             @for(jinx of allJinxes2; track jinx){
 
             <div class="row" style="padding-left:20px">
-              <input class="col-2 form-check-input fs-5" type="checkbox" id=jinx.char1-jinx.char2 checked
+              <input class="col-2 form-check-input fs-5" type="checkbox" id=jinx.char1-jinx.char2 [(ngModel)]="jinx.show"
                 (click)="dontShowJinxesFun(jinx.char1,jinx.char2)">
               <div class="col-5 form-check-label fs-4" for=jinx.char1-jinx.char2>{{getNameForID(jinx.char1)}}</div>
               <div class="col-5 form-check-label fs-4">{{getNameForID(jinx.char2)}}</div>

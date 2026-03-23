@@ -41,6 +41,7 @@ export class App implements OnInit, AfterViewInit {
     char1: string,
     char2: string,
     reason: string,
+    show?: boolean
   }[] = [];
   dontShowJinxes: {
     char1: string,
@@ -1137,25 +1138,30 @@ loadJson(){
 
   //Jinxes--------------------
   updateJinxes() {
+    //set filtered jinxes to show on backpage
     this.filteredJinxes =
       this.jinxData.filter(jinx =>
         this.characters.includes(jinx.char1) &&
         this.characters.includes(jinx.char2));
 
+    //set filteredjinxes with stormcaught character to show on script
     this.filteredJinxes2 =
       this.jinxData.filter(jinx =>
         this.characters.includes(jinx.char1) &&
         this.characters.includes(jinx.char2) &&
         jinx.char2 != 'stormcatcher');
 
+    //set all jinxes
     this.allJinxes = this.filteredJinxes
     this.allJinxes2 = this.filteredJinxes2
 
 
+    //Jinxes to hide
     let removeSet = new Set(
       this.dontShowJinxes.map(j => `${j.char1}|${j.char2}`)
     );
 
+    //remove hidden jinxes from all Jinxes and all Jinxes2
     this.filteredJinxes = this.allJinxes.filter(
       j => !removeSet.has(`${j.char1}|${j.char2}`)
     );
@@ -1164,16 +1170,21 @@ loadJson(){
       j => !removeSet.has(`${j.char1}|${j.char2}`)
     );
 
+    //set every hide jinx checkbox to checked by default
+    for(const item of this.allJinxes2){
+      item.show = true;
+    }
 
+    //find the bootlegger rule matching the hidden jinxes string if exists
     this.bootlegger = this.bootlegger.filter(
       item => item !== this.hiddenJinxesString)
 
-
+    //find number of jinxes
     let hiddenJinxes = this.dontShowJinxes
       .map(pair => `${this.getNameForID(pair.char1)}/${this.getNameForID(pair.char2)}`)
 
 
-
+    //set hidden jinxes string based on number of jinxes
     if (hiddenJinxes.length === 1) {
       this.hiddenJinxesString = hiddenJinxes[0];
     }
@@ -1187,8 +1198,8 @@ loadJson(){
         hiddenJinxes[hiddenJinxes.length - 1];
     }
 
-    console.log("hiddenjinxesstring: " + this.hiddenJinxesString)
 
+    //remove existing bootlegger rule if exists
     let index = this.bootlegger.indexOf("Do not use the " + this.hiddenJinxesString + " jinx.");
 
       if (index !== -1) {
@@ -1204,6 +1215,7 @@ loadJson(){
 
 
 
+    //add bootlegger rule if option enabled
     if (this.dontShowJinxes.length > 1 && this.addBootRule) {
       this.hiddenJinxesString = "Do not use the " + this.hiddenJinxesString + " jinxes."
       this.bootlegger.push(this.hiddenJinxesString)
@@ -1214,7 +1226,17 @@ loadJson(){
       this.bootlegger.push(this.hiddenJinxesString)
     }
 
-    console.log(this.hiddenJinxesString)
+    //change checkboxes in ui when loading json
+    this.allJinxes2.forEach(jinx => {
+      const exists = this.dontShowJinxes.some(d =>
+        d.char1 === jinx.char1 && d.char2 === jinx.char2
+      );
+
+      if (exists) {
+        jinx.show = false; 
+      }
+    });
+
 
 
   }
