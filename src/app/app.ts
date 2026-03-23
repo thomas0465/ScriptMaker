@@ -665,6 +665,28 @@ export class App implements OnInit, AfterViewInit {
     this.evilAbilityColor = '#000000'
   }
 
+  copyscriptcolor(){
+    this.goodCharColor = this.scriptNameColor
+    this.evilCharColor = this.scriptNameColor
+    this.fabledColor = this.scriptNameColor
+    this.loricColor = this.scriptNameColor
+    this.travColor = this.scriptNameColor
+    this.divTopColor = this.scriptNameColor
+    this.divBottomColor = this.scriptNameColor
+    this.goodAbilityColor = this.scriptNameColor
+    this.evilAbilityColor = this.scriptNameColor
+  }
+
+    copyscriptcolortotext(){
+    this.goodCharColor = this.scriptNameColor
+    this.evilCharColor = this.scriptNameColor
+    this.fabledColor = this.scriptNameColor
+    this.loricColor = this.scriptNameColor
+    this.travColor = this.scriptNameColor
+    this.goodAbilityColor = this.scriptNameColor
+    this.evilAbilityColor = this.scriptNameColor
+  }
+
   lightWithTextColors() {
     this.scriptNameColor = '#000000'
     this.goodCharColor = '#0000ff'
