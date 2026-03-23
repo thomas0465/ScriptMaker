@@ -324,6 +324,18 @@ input[type=number]::-webkit-outer-spin-button {
 
 }
 
+.charRowCol {
+  padding-top: 0px;
+  border: 0px solid blue;
+  max-height: 40px;
+  min-height: 35px;
+  margin: -3px 0px -13px 0px;
+   grid-column: span 2;
+  position:relative;
+  bottom:7px;
+
+}
+
 .charname {
   font-family: 'AssiBold';
   float: left;
@@ -336,6 +348,22 @@ input[type=number]::-webkit-outer-spin-button {
   padding-right: 3px;
     position: relative;
   bottom:-3px;
+}
+
+.charnameCol {
+  font-family: 'AssiBold';
+  float: left;
+  font-size: 3.2mm;
+  font-weight: 900;
+  align-items: center;
+  gap: 0mm;
+  width:90px;
+  padding-top: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+    position: relative;
+  bottom:8px;
+  left: -10px;
 }
 
 .proxy {
@@ -352,6 +380,20 @@ input[type=number]::-webkit-outer-spin-button {
   color: rgb(83, 83, 83);
 }
 
+.proxyCol {
+  font-family: 'Assi';
+  float: right;
+  font-size:3.1mm;
+  font-weight: 000;
+
+  padding-top: 0px;
+    position: relative;
+  bottom:5px;
+  margin: -10px  0px -10px 0px;
+
+  color: rgb(83, 83, 83);
+}
+
 
 .charability {
   font-family: 'Assi';
@@ -362,6 +404,23 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0;
   padding-left: 37px;
   align-items: right;
+
+    border:0px solid green;
+}
+
+.charabilityCol {
+  font-family: 'Assi';
+  float: right;
+  width: 83%;
+  font-size: 3.2mm;
+  line-height: 1.2;
+  margin: 0;
+  padding-left: -10px;
+  align-items: right;
+
+    position: relative;
+  bottom:8px;
+  left: -10px;
 
     border:0px solid green;
 }
@@ -384,6 +443,17 @@ input[type=number]::-webkit-outer-spin-button {
 
 }
 
+.jinxrowCol {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 60px;
+  position: relative;
+  top: -19px;
+  left: -8px
+
+}
+
 .charImageContainer {
   float: left;
   align-items: left;
@@ -396,6 +466,15 @@ input[type=number]::-webkit-outer-spin-button {
 .charImage {
   max-height: 74px;
   margin: -10px 0px -10px 0px;
+
+}
+
+.charImageCol {
+  max-height: 47px;
+  margin: 0px 0px 0px 0px;
+
+  position: relative;
+  bottom:3px;
 
 }
 
@@ -468,6 +547,15 @@ input[type=number]::-webkit-outer-spin-button {
   border: 0px solid red;
   margin: -10px 0px -10px 0px;
 }
+.jinxIconCol {
+  float: left;
+  height: 22px;
+  position: relative;
+  bottom:6px;
+  border: 0px solid red;
+  margin: -10px 0px -10px 0px;
+}
+
 
 .jinxIcon2 {
   float: left;

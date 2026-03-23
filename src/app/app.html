@@ -302,6 +302,14 @@
         
         </div>
 
+          <div class="col">
+            <div class="form-check form-switch ps-5 mt-3">
+              <input class="form-check-input fs-5" type="checkbox" id="oneCol" [(ngModel)]="oneCol"
+                (ngModelChange)="create()">
+              <label class="form-check-label fs-4" for="oneCol">One column layout</label>
+            </div>
+          </div>
+
 
           <div class="col">
             <div class="form-check form-switch ps-5 mt-3">
@@ -577,9 +585,8 @@
 
           <div class="col-12 mt-4">
             <div class="alert alert-secondary" role="alert">
-              PDF Preview may not be fully accurate, click the Save & Print Button to view the final version. Print
-              with
-              A4 paper size.
+              Preview may not be fully accurate, click Save & Print Button to view final version. Print
+              with A4 paper size.
             </div>
             <div class="col-12">
               <div class="alert alert-secondary" role="alert">
@@ -588,10 +595,10 @@
             </div>
 
             <div class="alert alert-secondary" role="alert">
-              Created by @Thomas04 on the Unoffical BOTC Discord. <br>Not endorsed by TPI.
+              Created by @Thomas04 on the Unoffical BOTC Discord. Not endorsed by TPI.
               <br>
               Source Code: <a
-                href="https://github.com/thomas0465/ScriptMaker">https://github.com/thomas0465/ScriptMaker</a>
+                href="https://github.com/thomas0465/ScriptMaker">github.com/thomas0465/ScriptMaker</a>
 
             </div>
 
@@ -614,6 +621,9 @@
         </div>
 
         }
+
+
+            
         
         <!----------Print--------------------------------------------------------->
 
@@ -776,6 +786,7 @@
 
 
               @for (item of townsfolkPage1; track item) {
+@if(!oneCol){
               <div class="charRow" style="float: left;">
                 <div class="charImageContainer">
                   <img src={{item.Image}} class="charImage" (error)="onImageError($event,item.ID)">
@@ -799,7 +810,6 @@
                     <img src={{getImageForID(getProxyForName(item.Name))}}
                       (error)="onImageError($event,getProxyForName(item.Name))" class="jinxIcon"
                       style="height:25px; bottom:-3px; padding-right:60px; opacity:50%">
-
                     }
                   </div>
 
@@ -808,6 +818,56 @@
                     {{item.Ability}}</p>
                 </div>
               </div>
+
+                }
+              }
+
+              @for (item of townsfolk; track item) {
+                @if(oneCol){
+                
+                <div class="charRowCol" style="float: left;">
+                <div class="charImageContainer">
+                  <img src={{item.Image}} class="charImageCol" (error)="onImageError($event,item.ID)">
+                </div>
+                <div class="chartextrow">
+
+                  <div class="charnamerow">
+                  <b class="charnameCol" [style.color]='goodCharColor' [style.font-family]="currentFontChar || 'Assi'">{{
+                      item.Name }}</b>
+                                     <p class="charabilityCol" [style.line-height]="abilityLineHeight" [style.color]='goodAbilityColor'>
+                    {{item.Ability}}</p>
+
+                  </div>
+
+
+                 
+                </div>
+                
+                <div class="row"></div>
+                <div class="jinxrowCol">
+                
+                    @for (jinx of filteredJinxes; track jinx){
+                    @if (jinx.char1 === item.ID){
+                    @if (getImageForID(jinx.char2)) {
+                    <img src={{getImageForID(jinx.char2)}} class="jinxIconCol" (error)="onImageError($event,jinx.char2)">
+                    }
+                    }
+                    }
+                   
+                    @if(getProxyForName(item.Name) != ''){
+                    <div class="proxyCol"><i>
+                        Proxy Token: {{getNameForID(getProxyForName(item.Name))}}
+                      </i>
+                    </div>
+                    <img src={{getImageForID(getProxyForName(item.Name))}}
+                      (error)="onImageError($event,getProxyForName(item.Name))" class="jinxIconCol"
+                      style="height:25px; bottom:-3px; padding-right:60px; opacity:50%">
+                    }
+                    </div>
+           
+
+              </div>
+                  }
               }
 
 
@@ -820,8 +880,9 @@
                 <div class="TypeHeader" [style.color]="divTopColor">OUTSIDERS</div>
               </div>
 
-              @for (item of outsidersPage1; track item) {
-              <div class="charRow">
+ @for (item of outsidersPage1; track item) {
+@if(!oneCol){
+              <div class="charRow" style="float: left;">
                 <div class="charImageContainer">
                   <img src={{item.Image}} class="charImage" (error)="onImageError($event,item.ID)">
                 </div>
@@ -844,14 +905,64 @@
                     <img src={{getImageForID(getProxyForName(item.Name))}}
                       (error)="onImageError($event,getProxyForName(item.Name))" class="jinxIcon"
                       style="height:25px; bottom:-3px; padding-right:60px; opacity:50%">
-
                     }
                   </div>
+
+
                   <p class="charability" [style.line-height]="abilityLineHeight" [style.color]='goodAbilityColor'>
                     {{item.Ability}}</p>
-
                 </div>
               </div>
+
+                }
+              }
+
+              @for (item of outsiders; track item) {
+                @if(oneCol){
+                
+                <div class="charRowCol" style="float: left;">
+                <div class="charImageContainer">
+                  <img src={{item.Image}} class="charImageCol" (error)="onImageError($event,item.ID)">
+                </div>
+                <div class="chartextrow">
+
+                  <div class="charnamerow">
+                  <b class="charnameCol" [style.color]='goodCharColor' [style.font-family]="currentFontChar || 'Assi'">{{
+                      item.Name }}</b>
+                                     <p class="charabilityCol" [style.line-height]="abilityLineHeight" [style.color]='goodAbilityColor'>
+                    {{item.Ability}}</p>
+
+                  </div>
+
+
+                 
+                </div>
+                
+                <div class="row"></div>
+                <div class="jinxrowCol">
+                
+                    @for (jinx of filteredJinxes; track jinx){
+                    @if (jinx.char1 === item.ID){
+                    @if (getImageForID(jinx.char2)) {
+                    <img src={{getImageForID(jinx.char2)}} class="jinxIconCol" (error)="onImageError($event,jinx.char2)">
+                    }
+                    }
+                    }
+                   
+                    @if(getProxyForName(item.Name) != ''){
+                    <div class="proxyCol"><i>
+                        Proxy Token: {{getNameForID(getProxyForName(item.Name))}}
+                      </i>
+                    </div>
+                    <img src={{getImageForID(getProxyForName(item.Name))}}
+                      (error)="onImageError($event,getProxyForName(item.Name))" class="jinxIconCol"
+                      style="height:25px; bottom:-3px; padding-right:60px; opacity:50%">
+                    }
+                    </div>
+           
+
+              </div>
+                  }
               }
 
 
@@ -863,51 +974,9 @@
                 <div class="TypeHeader" [style.color]="divBottomColor">MINIONS</div>
               </div>
 
-              @for (item of minionsPage1; track item) {
-              <div class="charRow">
-                <div class="charImageContainer">
-                  <img src={{item.Image}} class="charImage" (error)="onImageError($event,item.ID)">
-                </div>
-                <div class="chartextrow">
-                  <div class="charnamerow">
-                    <b class="charname" [style.color]='evilCharColor' [style.font-family]="currentFontChar || 'Assi'">{{
-                      item.Name }}</b>
-                    @for (jinx of filteredJinxes; track jinx){
-                    @if (jinx.char1 === item.ID){
-                    @if (getImageForID(jinx.char2)) {
-                    <img src={{getImageForID(jinx.char2)}} class="jinxIcon" (error)="onImageError($event,jinx.char2)">
-                    }
-                    }
-                    } @if(getProxyForName(item.Name) != ''){
-                    <div class="proxy" ><i>
-                        Proxy Token: {{getNameForID(getProxyForName(item.Name))}}
-                      </i>
-                    </div>
-                    <img src={{getImageForID(getProxyForName(item.Name))}}
-                      (error)="onImageError($event,getProxyForName(item.Name))" class="jinxIcon"
-                      style="height:25px; bottom:-3px; padding-right:60px; opacity:50%">
-
-                    }
-                  </div>
-                  <p class="charability" [style.line-height]="abilityLineHeight" [style.color]='evilAbilityColor'>
-                    {{item.Ability}}</p>
-
-                </div>
-              </div>
-              }
-
-
-              <!-- Demons -->
-              <div class="divRow">
-                <div class="divider">
-                  <div [style.background-color]='divBottomColor' class="divPng" style="width: 87%;">
-                  </div>
-                </div>
-                <div class="TypeHeader" [style.color]="divBottomColor">DEMONS</div>
-              </div>
-
-              @for (item of demonsPage1; track item) {
-              <div class="charRow">
+ @for (item of minionsPage1; track item) {
+@if(!oneCol){
+              <div class="charRow" style="float: left;">
                 <div class="charImageContainer">
                   <img src={{item.Image}} class="charImage" (error)="onImageError($event,item.ID)">
                 </div>
@@ -930,17 +999,163 @@
                     <img src={{getImageForID(getProxyForName(item.Name))}}
                       (error)="onImageError($event,getProxyForName(item.Name))" class="jinxIcon"
                       style="height:25px; bottom:-3px; padding-right:60px; opacity:50%">
-
                     }
                   </div>
+
+
                   <p class="charability" [style.line-height]="abilityLineHeight" [style.color]='evilAbilityColor'>
                     {{item.Ability}}</p>
-
                 </div>
               </div>
+
+                }
               }
 
-              @if (bootlegger.length > 0 && showBoot== 'Bottom'){
+              @for (item of minions; track item) {
+                @if(oneCol){
+                
+                <div class="charRowCol" style="float: left;">
+                <div class="charImageContainer">
+                  <img src={{item.Image}} class="charImageCol" (error)="onImageError($event,item.ID)">
+                </div>
+                <div class="chartextrow">
+
+                  <div class="charnamerow">
+                  <b class="charnameCol" [style.color]='evilCharColor' [style.font-family]="currentFontChar || 'Assi'">{{
+                      item.Name }}</b>
+                    <p class="charabilityCol" [style.line-height]="abilityLineHeight" [style.color]='evilAbilityColor'>
+                    {{item.Ability}}</p>
+
+                  </div>
+
+
+                 
+                </div>
+                
+                <div class="row"></div>
+                <div class="jinxrowCol">
+                
+                    @for (jinx of filteredJinxes; track jinx){
+                    @if (jinx.char1 === item.ID){
+                    @if (getImageForID(jinx.char2)) {
+                    <img src={{getImageForID(jinx.char2)}} class="jinxIconCol" (error)="onImageError($event,jinx.char2)">
+                    }
+                    }
+                    }
+                   
+                    @if(getProxyForName(item.Name) != ''){
+                    <div class="proxyCol"><i>
+                        Proxy Token: {{getNameForID(getProxyForName(item.Name))}}
+                      </i>
+                    </div>
+                    <img src={{getImageForID(getProxyForName(item.Name))}}
+                      (error)="onImageError($event,getProxyForName(item.Name))" class="jinxIconCol"
+                      style="height:25px; bottom:-3px; padding-right:60px; opacity:50%">
+                    }
+                    </div>
+           
+
+              </div>
+                  }
+              }
+
+
+              <!-- Demons -->
+              <div class="divRow">
+                <div class="divider">
+                  <div [style.background-color]='divBottomColor' class="divPng" style="width: 87%;">
+                  </div>
+                </div>
+                <div class="TypeHeader" [style.color]="divBottomColor">DEMONS</div>
+              </div>
+
+
+ @for (item of demonsPage1; track item) {
+@if(!oneCol){
+              <div class="charRow" style="float: left;">
+                <div class="charImageContainer">
+                  <img src={{item.Image}} class="charImage" (error)="onImageError($event,item.ID)">
+                </div>
+                <div class="chartextrow">
+                  <div class="charnamerow">
+                    <b class="charname" [style.color]='evilCharColor' [style.font-family]="currentFontChar || 'Assi'">{{
+                      item.Name }}</b>
+                    @for (jinx of filteredJinxes; track jinx){
+                    @if (jinx.char1 === item.ID){
+                    @if (getImageForID(jinx.char2)) {
+                    <img src={{getImageForID(jinx.char2)}} class="jinxIcon" (error)="onImageError($event,jinx.char2)">
+                    }
+                    }
+                    }
+                    @if(getProxyForName(item.Name) != ''){
+                    <div class="proxy"><i>
+                        Proxy Token: {{getNameForID(getProxyForName(item.Name))}}
+                      </i>
+                    </div>
+                    <img src={{getImageForID(getProxyForName(item.Name))}}
+                      (error)="onImageError($event,getProxyForName(item.Name))" class="jinxIcon"
+                      style="height:25px; bottom:-3px; padding-right:60px; opacity:50%">
+                    }
+                  </div>
+
+
+                  <p class="charability" [style.line-height]="abilityLineHeight" [style.color]='evilAbilityColor'>
+                    {{item.Ability}}</p>
+                </div>
+              </div>
+
+                }
+              }
+
+              @for (item of demons; track item) {
+                @if(oneCol){
+                
+                <div class="charRowCol" style="float: left;">
+                <div class="charImageContainer">
+                  <img src={{item.Image}} class="charImageCol" (error)="onImageError($event,item.ID)">
+                </div>
+                <div class="chartextrow">
+
+                  <div class="charnamerow">
+                  <b class="charnameCol" [style.color]='evilCharColor' [style.font-family]="currentFontChar || 'Assi'">{{
+                      item.Name }}</b>
+                                     <p class="charabilityCol" [style.line-height]="abilityLineHeight" [style.color]='evilAbilityColor'>
+                    {{item.Ability}}</p>
+
+                  </div>
+
+
+                 
+                </div>
+                
+                <div class="row"></div>
+                <div class="jinxrowCol">
+                
+                    @for (jinx of filteredJinxes; track jinx){
+                    @if (jinx.char1 === item.ID){
+                    @if (getImageForID(jinx.char2)) {
+                    <img src={{getImageForID(jinx.char2)}} class="jinxIconCol" (error)="onImageError($event,jinx.char2)">
+                    }
+                    }
+                    }
+                   
+                    @if(getProxyForName(item.Name) != ''){
+                    <div class="proxyCol"><i>
+                        Proxy Token: {{getNameForID(getProxyForName(item.Name))}}
+                      </i>
+                    </div>
+                    <img src={{getImageForID(getProxyForName(item.Name))}}
+                      (error)="onImageError($event,getProxyForName(item.Name))" class="jinxIconCol"
+                      style="height:25px; bottom:-3px; padding-right:60px; opacity:50%">
+                    }
+                    </div>
+           
+
+              </div>
+                  }
+              }
+
+  @if (bootlegger.length > 0 && showBoot== 'Bottom'){
 
 
 
@@ -975,11 +1190,9 @@
               </div>
               }
               }
-
-
-
-            </div>
+              </div>
             }
+                
 
 
           </div>

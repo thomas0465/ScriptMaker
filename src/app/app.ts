@@ -115,6 +115,7 @@ export class App implements OnInit, AfterViewInit {
   showLoric: boolean = false;
 
   proxiesExist: boolean = false;
+  oneCol: boolean = false;
 
 
 
@@ -316,6 +317,7 @@ export class App implements OnInit, AfterViewInit {
     this.centerTitle = false
     this.lowAuthor = false
     this.titleWidth = 'auto'
+    this.oneCol = false;
 
     this.create()
   }
@@ -1674,6 +1676,13 @@ loadJson(){
             delete this.fullJsonSplit[0]["proxies"] 
     }
 
+        
+    if(this.oneCol){
+      this.fullJsonSplit[0]["oneCol"] = this.oneCol
+    }else{
+            delete this.fullJsonSplit[0]["oneCol"] 
+    }
+
   }
 
 
@@ -1784,6 +1793,10 @@ loadJson(){
     this.loadProxies = []
     if (this.fullJsonSplit[0].proxies) {
         this.loadProxies = this.fullJsonSplit[0].proxies
+    }
+
+    if (this.fullJsonSplit[0].oneCol) {
+      this.oneCol = this.fullJsonSplit[0].oneCol;
     }
 
 
