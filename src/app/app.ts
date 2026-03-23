@@ -400,6 +400,10 @@ export class App implements OnInit, AfterViewInit {
 
     this.loadJson()
     this.loadParams()
+    this.create()
+    if(this.centerTitle){
+      this.updateCSS()
+    }
 
     
 
@@ -431,8 +435,14 @@ export class App implements OnInit, AfterViewInit {
       this.loadJson()
       this.loadParams()
       this.create()
+      if(this.centerTitle){
+        this.updateCSS()
+      }
+          
+
 
     };
+
 
 
     reader.readAsText(file);
@@ -1095,8 +1105,8 @@ loadJson(){
       this.abilityLineHeight = '1.2';
     }
 
+    
     this.updateCSS()
-
     this.cd.detectChanges();
 
   }
