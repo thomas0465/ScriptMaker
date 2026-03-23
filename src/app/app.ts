@@ -683,8 +683,8 @@ export class App implements OnInit, AfterViewInit {
     this.fabledColor = this.scriptNameColor
     this.loricColor = this.scriptNameColor
     this.travColor = this.scriptNameColor
-    this.goodAbilityColor = this.scriptNameColor
-    this.evilAbilityColor = this.scriptNameColor
+    //this.goodAbilityColor = this.scriptNameColor
+    //this.evilAbilityColor = this.scriptNameColor
   }
 
   lightWithTextColors() {
