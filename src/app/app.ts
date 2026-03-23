@@ -71,7 +71,7 @@ export class App implements OnInit, AfterViewInit {
   offsetPlayerCount: string = ''
   offsetCharBottom: string = ''
 
-  showNpcNames: boolean = true;
+  showNpcNames: boolean = false;
   jsonError: boolean = false;
 
   invertOtherDeg: string = '0deg'
@@ -288,7 +288,7 @@ export class App implements OnInit, AfterViewInit {
     this.invertOther = false;
     this.showPlayerCount = true;
     this.showCharBottom = true;
-    this.showNpcNames = true;
+    this.showNpcNames = false;
     this.showBoot = 'none';
     this.showDjinn = false;
 
@@ -1623,7 +1623,7 @@ loadJson(){
       delete this.fullJsonSplit[0]["showDjinn"] 
     }
 
-    if(this.showNpcNames !== true){
+    if(this.showNpcNames !== false){
       this.fullJsonSplit[0]["showNpcNames"] = this.showNpcNames;
     }else{
       delete this.fullJsonSplit[0]["showNpcNames"] 
