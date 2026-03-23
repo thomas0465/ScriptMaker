@@ -21,14 +21,12 @@
 }
 
 
-
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button {  
 
    opacity: 1;
 
 }
-
 
 .container {
   margin-left: 0!important;
@@ -122,7 +120,6 @@ input[type=number]::-webkit-outer-spin-button {
   display: flex;
   flex-direction: row;
   align-items: center;
-  /* vertical alignment */
   border: 0px solid red;
   position: relative;
   bottom:35px;
@@ -176,9 +173,7 @@ input[type=number]::-webkit-outer-spin-button {
   border:0px solid green;
   grid-column: span 2;
   margin: -10px 0px -15px 0px;
-
 }
-
 
 .townsfolkRow {
   width: 100%;
@@ -234,10 +229,6 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .page2main {
-  /* letter
-  height: 11.2in;
-  width: 6.2in;
-  */
   height:10.8in;
   width:7in;
   padding-left: 90px;
@@ -263,16 +254,9 @@ input[type=number]::-webkit-outer-spin-button {
   height:20px;
   font-size: 3.5mm;
   color: black;
-  /*background-color: white;
-  border: 0px solid red;;
-  */
 }
 
 .print-page {
-  /* letter
-  width: 8.27in;
-  min-height: 11.69in;
-  */
   width:8.5in;
   min-height: 11in;
   padding: 0.1in;
@@ -280,12 +264,8 @@ input[type=number]::-webkit-outer-spin-button {
   background: white;
   box-sizing: border-box;
   clear: both;
-
-  /* Force new page when printing */
   page-break-before: always;
-  /* For older browsers */
   break-before: page;
-  /* Modern standard */
 
 }
 
@@ -293,16 +273,11 @@ input[type=number]::-webkit-outer-spin-button {
 .page1 {
   display: flex;
   flex-direction: column;
-
-  /* letter
-  height: 11.5in;
-  */
   height: 11in;
   position: relative;
   align-items: stretch;
 }
 
-/* Screen preview styling */
 .body {
   background: rgb(198, 198, 198);
   min-height: 100vh;
@@ -434,11 +409,8 @@ input[type=number]::-webkit-outer-spin-button {
 .chartextrow {
   display: flex;
   flex-direction: column;
-  /* stack vertically */
   justify-content: center;
-  /* vertical centering */
   min-height: 60px;
-  /* required for vertical centering */
 
 
 }
@@ -595,9 +567,7 @@ input[type=number]::-webkit-outer-spin-button {
   font-family: 'Philo';
   width: 190px;
   display: inline-block;
-  /* required so transform works properly */
   transform: rotate(90deg);
-
   position: relative;
   bottom: -80px;
   right: 58px;
@@ -609,9 +579,7 @@ input[type=number]::-webkit-outer-spin-button {
   font-family: 'Philo';
   width: 190px;
   display: inline-block;
-  /* required so transform works properly */
   transform: rotate(90deg);
-
   position: relative;
   bottom: -80px;
   right: 58px;
@@ -657,7 +625,6 @@ input[type=number]::-webkit-outer-spin-button {
   display: flex;
   flex-direction: row;
   align-items: center;
-  /* vertical alignment */
   height: 50px;
   position: relative;
   bottom: 4px;
@@ -677,7 +644,6 @@ input[type=number]::-webkit-outer-spin-button {
   display: flex;
   flex-direction: row;
   align-items: center;
-  /* vertical alignment */
   border: 0px solid red;
   margin: -20px 0px -15px 0px;
 }
@@ -694,12 +660,9 @@ input[type=number]::-webkit-outer-spin-button {
   display: flex;
   flex-direction: row;
   align-items: center;
-  /* vertical alignment */
   border: 0px solid red;
   margin: -20px 0px -15px 0px;
-
 }
-
 
 .divRowPage2 {
   margin: 0 auto;
@@ -711,14 +674,11 @@ input[type=number]::-webkit-outer-spin-button {
   position: relative;
   bottom: -10px;
   left: 15px;
-
 }
-
 
 .divPngPage2 {
   width: 96%;
   height: 1px;
-  
 }
 
 .HeaderPage2 {
@@ -766,18 +726,13 @@ input[type=number]::-webkit-outer-spin-button {
   font-family: 'Assi';
   font-size: 3.4mm;
   padding-bottom: 10px;
-
   color: rgb(99, 98, 98);
-
   position: relative;
   bottom: -28px;
   padding-left: 15px;
   padding-right: 15px;
-
   border: 0px solid red;
-
 }
-
 .footer2 {
   text-align: center;
   display: table;

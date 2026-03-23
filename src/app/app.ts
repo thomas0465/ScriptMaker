@@ -557,11 +557,15 @@ export class App implements OnInit, AfterViewInit {
     const img = event.target as HTMLImageElement;
     if (ID) {
 
-      fetch(this.getImage2ForID(ID), { method: 'GET' })
-        .then(res => {
-          img.src = this.getImage2ForID(ID)
-        })
-        .catch(() => {
+        fetch(this.getImage2ForID(ID), { method: 'GET' })
+          .then(res => {
+            if (!res.ok) {
+              throw new Error('Image failed to load');
+            }
+            img.src = this.getImage2ForID(ID);
+          })
+          .catch(() => {
+
           //fallback images
           if (this.imageSelection == 'PNG') {
 
