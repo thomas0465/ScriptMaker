@@ -713,6 +713,18 @@ export class App implements OnInit, AfterViewInit {
     this.evilAbilityColor = '#000000'
   }
 
+  abilitiestoblack() {
+    this.goodCharColor = '#000000'
+    this.evilCharColor = '#000000'
+    this.fabledColor = '#000000'
+    this.loricColor = '#000000'
+    this.travColor = '#000000'
+    this.divTopColor = '#000000'
+    this.divBottomColor = '#000000'
+    this.goodAbilityColor = '#000000'
+    this.evilAbilityColor = '#000000'
+  }
+
   randomColor(inputColor: string) {
     let color = '#';
     const letters = '0123456789ABCDEF'
