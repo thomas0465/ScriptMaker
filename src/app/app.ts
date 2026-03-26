@@ -319,6 +319,7 @@ export class App implements OnInit, AfterViewInit {
     this.titleWidth = 'auto'
     this.oneCol = false;
 
+    this.proxies = [];
     this.create()
   }
 
@@ -435,6 +436,7 @@ export class App implements OnInit, AfterViewInit {
       this.loadJson()
       this.loadParams()
       this.create()
+
       if(this.centerTitle){
         this.updateCSS()
       }
@@ -1426,6 +1428,13 @@ loadJson(){
     this.create()
   }
 
+  resetProxies(){
+    for(const item of this.playablecharacters){
+        item.Proxy = '';
+        item.ProxyInput = ''
+    }
+  }
+
 
 
 
@@ -1858,9 +1867,13 @@ loadJson(){
       this.dontShowJinxes = this.fullJsonSplit[0].dontShowJinxes;
     }
     this.loadProxies = []
+    for(const item of this.playablecharacters){
+        item.Proxy = '';
+        item.ProxyInput = ''
+      }
     if (this.fullJsonSplit[0].proxies) {
         this.loadProxies = this.fullJsonSplit[0].proxies
-    }
+    
 
     if (this.fullJsonSplit[0].oneCol) {
       this.oneCol = this.fullJsonSplit[0].oneCol;
