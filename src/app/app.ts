@@ -1873,7 +1873,7 @@ loadJson(){
       }
     if (this.fullJsonSplit[0].proxies) {
         this.loadProxies = this.fullJsonSplit[0].proxies
-    
+    }
 
     if (this.fullJsonSplit[0].oneCol) {
       this.oneCol = this.fullJsonSplit[0].oneCol;
