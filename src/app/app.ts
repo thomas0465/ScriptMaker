@@ -875,8 +875,13 @@ loadJson(){
             if (this.hbchar.image instanceof Array) {
               this.hbimage = this.hbchar.image[0]
             } else {
-              this.hbimage = this.hbchar.image
+              if(this.hbchar.image){
+                this.hbimage = this.hbchar.image
+              }else{
+                this.hbimage = 'https://www.none.none'
+              }
             }
+
 
             //if hbmark is already set
             if (this.hbmark !== '') {
