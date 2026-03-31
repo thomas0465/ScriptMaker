@@ -320,6 +320,7 @@ export class App implements OnInit, AfterViewInit {
     this.oneCol = false;
 
     this.proxies = [];
+    this.hbmark = ''
     this.create()
   }
 
