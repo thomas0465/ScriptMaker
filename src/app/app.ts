@@ -247,7 +247,6 @@ export class App implements OnInit, AfterViewInit {
   test: string = ''
 
   constructor(private cd: ChangeDetectorRef) { }
-  
 
   ngOnInit(): void {
 
@@ -258,8 +257,6 @@ export class App implements OnInit, AfterViewInit {
         return char; // leave unchanged
       }
 
-
-      
       return {
         ...char,
         Image: 'https://raw.githubusercontent.com/tomozbot/botc-icons/refs/heads/main/SVG/' + char.ID + '.svg'
@@ -542,14 +539,8 @@ export class App implements OnInit, AfterViewInit {
       baseUrl = 'https://raw.githubusercontent.com/tomozbot/botc-icons/refs/heads/main/PNG/'
       ext = '.png'
     } else {
-
-      if(this.imageOverwriteText){
       baseUrl = this.imageOverwriteText.split("{")[0]
       ext = this.imageOverwriteText.split("}")[1]
-      }else{
-        baseUrl = 'Botc-icons/Icon_'
-        ext = '.png'
-      }
     }
 
     const excludedIds = ['dawn', 'dusk', 'minioninfo', 'demoninfo']
