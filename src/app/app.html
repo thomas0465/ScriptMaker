@@ -181,6 +181,19 @@
           </div>
 
           <div class="row">
+            <div class="col-5 mt-2">
+              <label class="form-check-label fs-4" for="authorOffset">Title word spacing:</label>
+            </div>
+            <div class="col-6 mb-3">
+              <input type="number" step="1" [(ngModel)]="wordSpacingInput" (ngModelChange)="create()"
+                rows="1" class="form-control fs-4">
+            </div>
+            <div class="col-1 mt-1">
+              <button class="btn btn-secondary" (click)="resetWordSpacing()">R</button>
+            </div>
+          </div>
+
+          <div class="row">
             <div class="col">
               <div class="form-check form-switch ps-5 mb-3">
                 <input class="form-check-input fs-5" type="checkbox" id="centerTitle" [(ngModel)]="centerTitle"
@@ -782,10 +795,15 @@
 
                   <!----Name and Author-->
                   <div class="d-flex" style="position:relative; border:0px red solid"
-                    [style.left]="titleOffset"
-                    [style.width]="titleWidth">
-                    <div #TitleElement class="ScriptName" [style.font-family]="currentFont || 'Philo'"
-                      [style.color]="scriptNameColor" [style.font-size]="scriptFontSize">
+                  [style.left]="titleOffset"
+                  [style.width]="titleWidth"
+                  >
+                    <div #TitleElement 
+                    class="ScriptName" 
+                    [style.font-family]="currentFont || 'Philo'"
+                    [style.color]="scriptNameColor" 
+                    [style.font-size]="scriptFontSize"
+                    [style.word-spacing]="wordSpacing">
                       {{scriptName}}
                     </div>
 
@@ -1327,7 +1345,10 @@
           <p class="othernightText" [style.font-size]="showOtherNightText">OTHER NIGHTS</p>
         </div>
 
-        <div class="ScriptNameBottom" [style.color]="scriptNameColor" [style.font-family]="currentFont || 'Philo'">
+        <div 
+        class="ScriptNameBottom" 
+        [style.color]="scriptNameColor" 
+        [style.font-family]="currentFont || 'Philo'">
           {{scriptName}}</div>
 
         <div class="page2main">

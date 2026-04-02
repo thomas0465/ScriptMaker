@@ -116,6 +116,8 @@ export class App implements OnInit, AfterViewInit {
 
   proxiesExist: boolean = false;
   oneCol: boolean = false;
+  wordSpacingInput: number = 0
+  wordSpacing: string = '0px'
 
 
 
@@ -304,6 +306,9 @@ export class App implements OnInit, AfterViewInit {
 
     this.authorOffsetInput = 10
     this.authorOffset = '10px'
+
+    this.wordSpacingInput = 0
+    this.wordSpacing = '0px'
 
     this.italicAuthor = false;
     //this.fontName = ''
@@ -1402,6 +1407,7 @@ loadJson(){
     this.scriptFontSize = this.scriptFontSizeInput + 'px'
     this.authorFontSize = this.authorFontSizeInput + 'px'
     this.authorOffset = this.authorOffsetInput + 'px'
+    this.wordSpacing = this.wordSpacingInput + 'px'
 
   }
 
@@ -1422,6 +1428,15 @@ loadJson(){
     this.authorOffsetInput = 10
     this.create()
   }
+
+  resetWordSpacing() {
+    this.wordSpacingInput = 0
+    this.create()
+        if(this.centerTitle){
+        this.updateCSS()
+    }
+  }
+
   @ViewChild('fontinput') fontinput!: ElementRef<HTMLInputElement>;
 
 
@@ -1583,6 +1598,11 @@ loadJson(){
       delete this.fullJsonSplit[0]["authorOffsetInput"] 
     }
 
+    if(this.wordSpacingInput !== 0){
+      this.fullJsonSplit[0]["wordSpacingInput"] = this.wordSpacingInput
+    }else{
+      delete this.fullJsonSplit[0]["wordSpacingInput"] 
+    }
 
     if(this.centerTitle !== false){
       this.fullJsonSplit[0]["centerTitle"] = this.centerTitle
@@ -1787,6 +1807,9 @@ loadJson(){
     }
     if(this.fullJsonSplit[0].authorOffsetInput){
       this.authorOffsetInput = this.fullJsonSplit[0].authorOffsetInput
+    }
+    if(this.fullJsonSplit[0].wordSpacingInput){
+      this.wordSpacingInput = this.fullJsonSplit[0].wordSpacingInput
     }
     if(this.fullJsonSplit[0].centerTitle !== undefined){
       this.centerTitle = this.fullJsonSplit[0].centerTitle
