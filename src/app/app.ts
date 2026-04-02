@@ -109,7 +109,8 @@ export class App implements OnInit, AfterViewInit {
 
   abilityLineHeight: string = '1.2';
   italicAuthor: boolean = false;
-  addBootRule: boolean = true;
+  hideJinxesBootRule: boolean = true;
+  hbMarkBootRule: boolean = true
 
   showFabled: boolean = false;
   showLoric: boolean = false;
@@ -957,7 +958,7 @@ loadJson(){
         this.bootlegger.splice(index, 1);
       }
     
-    if (this.hbmark !== '' && this.hbexists) {
+    if (this.hbmark !== '' && this.hbexists && this.hbMarkBootRule) {
       this.bootlegger.push("This script features homebrew characters marked with " + this.hbmark)
     }
     
@@ -983,7 +984,6 @@ loadJson(){
     this.minions = this.setcharacters(this.minions, "minion")
 
     this.minionsPage1 = this.reorderForColumns(this.minions)
-
 
     //get list of demons
     this.demons = this.setcharacters(this.demons, "demon")
@@ -1060,8 +1060,6 @@ loadJson(){
         (orderMap.get(b.ID) ?? Infinity)
       );
     });
-
-
 
     this.setProxy()
 
@@ -1285,11 +1283,11 @@ loadJson(){
 
 
     //add bootlegger rule if option enabled
-    if (this.dontShowJinxes.length > 1 && this.addBootRule) {
+    if (this.dontShowJinxes.length > 1 && this.hideJinxesBootRule) {
       this.hiddenJinxesString = "Do not use the " + this.hiddenJinxesString + " jinxes."
       this.bootlegger.push(this.hiddenJinxesString)
 
-    } else if (this.dontShowJinxes.length == 1 && this.addBootRule) {
+    } else if (this.dontShowJinxes.length == 1 && this.hideJinxesBootRule) {
       this.hiddenJinxesString = "Do not use the " + this.hiddenJinxesString + " jinx."
 
       this.bootlegger.push(this.hiddenJinxesString)
@@ -1495,8 +1493,9 @@ loadJson(){
     return match ? match.Team : '';
   }
 
-  getProxyForName(inputName: string): string {
-    const match = this.playablecharacters.find(item => item.Name === inputName);
+  getProxyForID(inputID: string): string {
+    const match = this.playablecharacters.find(item => 
+      item.ID === inputID);
     return match ? (match.Proxy ? match.Proxy : '') : '';
   }
 
@@ -1760,10 +1759,16 @@ loadJson(){
             delete this.fullJsonSplit[0]["travColor"] 
     }
 
-    if(this.addBootRule !== true){
-      this.fullJsonSplit[0]["addBootRule"] = this.addBootRule;
+    if(this.hideJinxesBootRule !== true){
+      this.fullJsonSplit[0]["hideJinxesBootRule"] = this.hideJinxesBootRule;
     }else{
-            delete this.fullJsonSplit[0]["addBootRule"] 
+            delete this.fullJsonSplit[0]["hideJinxesBootRule"] 
+    }
+
+        if(this.hbMarkBootRule !== true){
+      this.fullJsonSplit[0]["hbMarkBootRule"] = this.hbMarkBootRule;
+    }else{
+            delete this.fullJsonSplit[0]["hbMarkBootRule"] 
     }
 
     if(this.dontShowJinxes.length > 0 ){
@@ -1889,8 +1894,11 @@ loadJson(){
     if (this.fullJsonSplit[0].travColor) {
       this.travColor = this.fullJsonSplit[0].travColor;
     }
-    if (this.fullJsonSplit[0].addBootRule !== undefined) {
-      this.addBootRule = this.fullJsonSplit[0].addBootRule;
+    if (this.fullJsonSplit[0].hideJinxesBootRule !== undefined) {
+      this.hideJinxesBootRule = this.fullJsonSplit[0].hideJinxesBootRule;
+    }
+    if (this.fullJsonSplit[0].hbMarkBootRule !== undefined) {
+      this.hbMarkBootRule = this.fullJsonSplit[0].hbMarkBootRule;
     }
     if (this.fullJsonSplit[0].dontShowJinxes) {
       this.dontShowJinxes = this.fullJsonSplit[0].dontShowJinxes;

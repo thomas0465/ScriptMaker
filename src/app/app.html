@@ -124,7 +124,7 @@
           @if(expandFont){
           <div class="row">
             <div class="col-5">
-              <label class="form-check-label fs-4 mt-2" for="showBoot">Custom font: <br></label>
+              <label class="form-check-label fs-4 mt-2 mb-1" for="showBoot">Custom font: <br></label>
             </div>
             <div class="col-6">
               <input class="form-control fs-5" type="file" accept=".ttf,.otf,.woff,.woff2" #fontinput
@@ -140,11 +140,11 @@
           </div>
           </div>
 
-          <div class="row mt-3">
+          <div class="row mt-1">
             <div class="col-5 mt-2">
               <label class="form-check-label fs-4" for="showBoot">Title font size:</label>
             </div>
-            <div class="col-6 mb-3">
+            <div class="col-6 mb-1">
               <input type="number" min="0" step="1" [(ngModel)]="scriptFontSizeInput" (ngModelChange)="create()"
                 rows="1" class="form-control fs-4">
             </div>
@@ -154,10 +154,23 @@
           </div>
 
           <div class="row">
-            <div class="col-5 mt-2">
+            <div class="col-5 mt-1">
+              <label class="form-check-label fs-4" for="authorOffset">Title word spacing:</label>
+            </div>
+            <div class="col-6 mb-1">
+              <input type="number" step="1" [(ngModel)]="wordSpacingInput" (ngModelChange)="create()"
+                rows="1" class="form-control fs-4">
+            </div>
+            <div class="col-1 mt-1">
+              <button class="btn btn-secondary" (click)="resetWordSpacing()">R</button>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-5 mt-1">
               <label class="form-check-label fs-4" for="authorFontSize">Author font size:</label>
             </div>
-            <div class="col-6 mb-3">
+            <div class="col-6 mb-1">
               <input type="number" min="0" step="1" [(ngModel)]="authorFontSizeInput" (ngModelChange)="create()"
                 rows="1" class="form-control fs-4">
             </div>
@@ -168,7 +181,7 @@
 
 
           <div class="row">
-            <div class="col-5 mt-2">
+            <div class="col-5 mt-1">
               <label class="form-check-label fs-4" for="authorOffset">Author vertical offset:</label>
             </div>
             <div class="col-6 mb-3">
@@ -180,22 +193,11 @@
             </div>
           </div>
 
-          <div class="row">
-            <div class="col-5 mt-2">
-              <label class="form-check-label fs-4" for="authorOffset">Title word spacing:</label>
-            </div>
-            <div class="col-6 mb-3">
-              <input type="number" step="1" [(ngModel)]="wordSpacingInput" (ngModelChange)="create()"
-                rows="1" class="form-control fs-4">
-            </div>
-            <div class="col-1 mt-1">
-              <button class="btn btn-secondary" (click)="resetWordSpacing()">R</button>
-            </div>
-          </div>
+          
 
           <div class="row">
             <div class="col">
-              <div class="form-check form-switch ps-5 mb-3">
+              <div class="form-check form-switch ps-5 mb-1">
                 <input class="form-check-input fs-5" type="checkbox" id="centerTitle" [(ngModel)]="centerTitle"
                   (ngModelChange)="create()">
                 <label class="form-check-label fs-4" for="centerTitle">Center Title</label>
@@ -205,7 +207,7 @@
 
           <div class="row">
             <div class="col">
-              <div class="form-check form-switch ps-5 mb-3">
+              <div class="form-check form-switch ps-5 mb-2">
                 <input class="form-check-input fs-5" type="checkbox" id="lowAuthor" [(ngModel)]="lowAuthor"
                   (ngModelChange)="create()">
                 <label class="form-check-label fs-4" for="lowAuthor">Author below title</label>
@@ -216,7 +218,7 @@
 
           <div class="row">
             <div class="col">
-              <div class="form-check form-switch ps-5 mb-3">
+              <div class="form-check form-switch ps-5 mb-2">
                 <input class="form-check-input fs-5" type="checkbox" id="italicAuthor" [(ngModel)]="italicAuthor"
                   (ngModelChange)="create()">
                 <label class="form-check-label fs-4" for="italicAuthor">Italicize author</label>
@@ -225,7 +227,7 @@
           </div>
           <div class="row">
             <div class="col">
-              <div class="form-check form-switch ps-5 mb-3">
+              <div class="form-check form-switch ps-5 mb-2">
                 <input class="form-check-input fs-5" type="checkbox" id="titleFont" [(ngModel)]="titleFont"
                   (ngModelChange)="create()">
                 <label class="form-check-label fs-4" for="titleFont">Use custom font for title</label>
@@ -234,7 +236,7 @@
           </div>
           <div class="row">
             <div class="col">
-              <div class="form-check form-switch ps-5 mb-3">
+              <div class="form-check form-switch ps-5 mb-2">
                 <input class="form-check-input fs-5" type="checkbox" id="authorFont" [(ngModel)]="authorFont"
                   (ngModelChange)="create()">
                 <label class="form-check-label fs-4" for="authorFont">Use custom font for author name</label>
@@ -243,7 +245,7 @@
           </div>
           <div class="row">
             <div class="col">
-              <div class="form-check form-switch ps-5 mb-3">
+              <div class="form-check form-switch ps-5 mb-2">
                 <input class="form-check-input fs-5" type="checkbox" id="charFont" [(ngModel)]="charFont"
                   (ngModelChange)="create()">
                 <label class="form-check-label fs-4" for="charFont">Use custom font for character names</label>
@@ -253,7 +255,7 @@
           </div>
           <div class="row">
             <div class="col">
-              <div class="form-check form-switch ps-5 mb-3">
+              <div class="form-check form-switch ps-5 mb-2">
                 <input class="form-check-input fs-5" type="checkbox" id="npcFont" [(ngModel)]="npcFont"
                   (ngModelChange)="create()">
                 <label class="form-check-label fs-4" for="npcFont">Use custom font for NPCs and Travellers</label>
@@ -311,7 +313,7 @@
             @if(hbexists){
 
             <div class="col-5 mt-1">
-              <label class="form-check-label fs-4 mt-2" for="hbmark">Homebrew Mark:</label>
+              <label class="form-check-label fs-4 mt-2" for="hbmark">Homebrew mark:</label>
             </div>
             <div class="col-7 mt-1">
 
@@ -319,12 +321,19 @@
 
 
             </div>
+                      <div class="col">
+            <div class="form-check form-switch ps-5 mt-2">
+              <input class="form-check-input fs-5" type="checkbox" id="oneCol" [(ngModel)]="hbMarkBootRule"
+                (ngModelChange)="create()">
+              <label class="form-check-label fs-4" for="oneCol">Homebrew mark Bootlegger rule</label>
+            </div>
+          </div>
           }
         
         </div>
 
           <div class="col">
-            <div class="form-check form-switch ps-5 mt-3">
+            <div class="form-check form-switch ps-5 mt-2">
               <input class="form-check-input fs-5" type="checkbox" id="oneCol" [(ngModel)]="oneCol"
                 (ngModelChange)="create()">
               <label class="form-check-label fs-4" for="oneCol">One column layout</label>
@@ -333,7 +342,7 @@
 
 
           <div class="col">
-            <div class="form-check form-switch ps-5 mt-3">
+            <div class="form-check form-switch ps-5 mt-2">
               <input class="form-check-input fs-5" type="checkbox" id="showDjinn" [(ngModel)]="showDjinn"
                 (ngModelChange)="create()">
               <label class="form-check-label fs-4" for="showDjinn">Show Djinn on script</label>
@@ -341,7 +350,7 @@
           </div>
 
           <div class="col">
-            <div class="form-check form-switch ps-5 mt-3">
+            <div class="form-check form-switch ps-5 mt-2">
               <input class="form-check-input fs-5" type="checkbox" id="npcNames" [(ngModel)]="showNpcNames"
                 (ngModelChange)="create()">
               <label class="form-check-label fs-4" for="npcNames">Show NPC names on script</label>
@@ -349,7 +358,7 @@
           </div>
 
           <div class="col">
-            <div class="form-check form-switch ps-5 mt-3">
+            <div class="form-check form-switch ps-5 mt-2">
               <input class="form-check-input fs-5" type="checkbox" id="invertOtherNight" [(ngModel)]="invertOther"
                 (ngModelChange)="create()">
               <label class="form-check-label fs-4" for="invertOtherNight">Invert other night order</label>
@@ -357,7 +366,7 @@
           </div>
 
           <div class="col">
-            <div class="form-check form-switch ps-5 mt-3">
+            <div class="form-check form-switch ps-5 mt-2">
               <input class="form-check-input fs-5" type="checkbox" id="invertOtherNight" [(ngModel)]="showPlayerCount"
                 (ngModelChange)="create()">
               <label class="form-check-label fs-4" for="showPlayerCount">Show player count on 2nd page</label>
@@ -365,7 +374,7 @@
           </div>
 
           <div class="col">
-            <div class="form-check form-switch ps-5 mt-3">
+            <div class="form-check form-switch ps-5 mt-2">
               <input class="form-check-input fs-5" type="checkbox" id="showIcons" [(ngModel)]="showCharBottom"
                 (ngModelChange)="create()">
               <label class="form-check-label fs-4" for="">Show icon row on 2nd page</label>
@@ -373,7 +382,7 @@
           </div>
 
           <div class="col">
-            <div class="form-check form-switch ps-5 mt-3">
+            <div class="form-check form-switch ps-5 mt-2">
               <input class="form-check-input fs-5" type="checkbox" id="iconsAbove" [(ngModel)]="iconsAbove"
                 (ngModelChange)="create()">
               <label class="form-check-label fs-4" for="iconsAbove">Icon row above player count</label>
@@ -577,7 +586,7 @@
 
 
           </div>
-          <div class="row mt-3">
+          <div class="row mt-2">
             <div class="col-4">
               <button class="btn btn-lg btn-secondary w-100" (click)="blackColors()">Black</button>
             </div>
@@ -588,7 +597,7 @@
               <button class="btn btn-lg btn-secondary w-100" (click)="lightColors()">Light</button>
             </div>
           </div>
-          <div class="row mt-3">
+          <div class="row mt-2">
                         <div class="col-4">
               <button class="btn btn-lg btn-secondary w-100" (click)="abilitiestoblack()">Black, not Title</button>
             </div>
@@ -599,7 +608,7 @@
               <button class="btn btn-lg btn-secondary w-100" (click)="lightWithTextColors()">Light w/ text</button>
             </div>
             </div>
-            <div class="row mt-3">
+            <div class="row mt-2">
             <div class="col-6">
               <button class="btn btn-lg btn-secondary w-100" (click)="copyscriptcolor()">All to Title color</button>
             </div>
@@ -628,9 +637,9 @@
             <div class="row">
               <div class="col">
                 <div class="form-check form-switch ps-5 mb-3">
-                  <input class="form-check-input fs-5" type="checkbox" id="addBootRule" [(ngModel)]="addBootRule"
+                  <input class="form-check-input fs-5" type="checkbox" id="hideJinxesBootRule" [(ngModel)]="hideJinxesBootRule"
                     (ngModelChange)="create()">
-                  <label class="form-check-label fs-4" for="addBootRule">Add Bootlegger rule</label>
+                  <label class="form-check-label fs-4" for="hideJinxesBootRule">Add Bootlegger rule</label>
                 </div>
               </div>
             </div>
@@ -660,7 +669,7 @@
           @for(char of playablecharacters; track char){
           <div class="row">
             <div class="col-4 mt-2" style="text-align: right;">
-              <div>{{char.Name}}</div>
+              <div>{{getNameForID(char.ID)}}</div>
             </div>
             <div class=col-7>
               <input type="text" class="form-control" (input)='create()' [(ngModel)]="char.ProxyInput">
@@ -909,13 +918,13 @@
                     }
                     }
                     }
-                    @if(getProxyForName(item.Name) != ''){
+                    @if(getProxyForID(item.ID) != ''){
                     <div class="proxy"><i>
-                        Proxy Token: {{getNameForID(getProxyForName(item.Name))}}
+                        Proxy Token: {{getNameForID(getProxyForID(item.ID))}}
                       </i>
                     </div>
-                    <img src={{getImageForID(getProxyForName(item.Name))}}
-                      (error)="onImageError($event,getProxyForName(item.Name))" class="jinxIcon"
+                    <img src={{getImageForID(getProxyForID(item.ID))}}
+                      (error)="onImageError($event,getProxyForID(item.ID))" class="jinxIcon"
                       style="height:25px; bottom:-3px; padding-right:60px; opacity:50%">
                     }
                   </div>
@@ -961,13 +970,13 @@
                     }
                     }
                    
-                    @if(getProxyForName(item.Name) != ''){
+                    @if(getProxyForID(item.ID) != ''){
                     <div class="proxyCol"><i>
-                        Proxy Token: {{getNameForID(getProxyForName(item.Name))}}
+                        Proxy Token: {{getNameForID(getProxyForID(item.ID))}}
                       </i>
                     </div>
-                    <img src={{getImageForID(getProxyForName(item.Name))}}
-                      (error)="onImageError($event,getProxyForName(item.Name))" class="jinxIconCol"
+                    <img src={{getImageForID(getProxyForID(item.ID))}}
+                      (error)="onImageError($event,getProxyForID(item.ID))" class="jinxIconCol"
                       style="height:25px; bottom:3px; padding-right:60px; opacity:50%">
                     }
                     </div>
@@ -1004,13 +1013,13 @@
                     }
                     }
                     }
-                    @if(getProxyForName(item.Name) != ''){
+                    @if(getProxyForID(item.ID) != ''){
                     <div class="proxy"><i>
-                        Proxy Token: {{getNameForID(getProxyForName(item.Name))}}
+                        Proxy Token: {{getNameForID(getProxyForID(item.ID))}}
                       </i>
                     </div>
-                    <img src={{getImageForID(getProxyForName(item.Name))}}
-                      (error)="onImageError($event,getProxyForName(item.Name))" class="jinxIcon"
+                    <img src={{getImageForID(getProxyForID(item.ID))}}
+                      (error)="onImageError($event,getProxyForID(item.ID))" class="jinxIcon"
                       style="height:25px; bottom:-3px; padding-right:60px; opacity:50%">
                     }
                   </div>
@@ -1056,13 +1065,13 @@
                     }
                     }
                    
-                    @if(getProxyForName(item.Name) != ''){
+                    @if(getProxyForID(item.ID) != ''){
                     <div class="proxyCol"><i>
-                        Proxy Token: {{getNameForID(getProxyForName(item.Name))}}
+                        Proxy Token: {{getNameForID(getProxyForID(item.ID))}}
                       </i>
                     </div>
-                    <img src={{getImageForID(getProxyForName(item.Name))}}
-                      (error)="onImageError($event,getProxyForName(item.Name))" class="jinxIconCol"
+                    <img src={{getImageForID(getProxyForID(item.ID))}}
+                      (error)="onImageError($event,getProxyForID(item.ID))" class="jinxIconCol"
                       style="height:25px; bottom:3px; padding-right:60px; opacity:50%">
                     }
                     </div>
@@ -1098,13 +1107,13 @@
                     }
                     }
                     }
-                    @if(getProxyForName(item.Name) != ''){
+                    @if(getProxyForID(item.ID) != ''){
                     <div class="proxy"><i>
-                        Proxy Token: {{getNameForID(getProxyForName(item.Name))}}
+                        Proxy Token: {{getNameForID(getProxyForID(item.ID))}}
                       </i>
                     </div>
-                    <img src={{getImageForID(getProxyForName(item.Name))}}
-                      (error)="onImageError($event,getProxyForName(item.Name))" class="jinxIcon"
+                    <img src={{getImageForID(getProxyForID(item.ID))}}
+                      (error)="onImageError($event,getProxyForID(item.ID))" class="jinxIcon"
                       style="height:25px; bottom:-3px; padding-right:60px; opacity:50%">
                     }
                   </div>
@@ -1150,13 +1159,13 @@
                     }
                     }
                    
-                    @if(getProxyForName(item.Name) != ''){
+                    @if(getProxyForID(item.ID) != ''){
                     <div class="proxyCol"><i>
-                        Proxy Token: {{getNameForID(getProxyForName(item.Name))}}
+                        Proxy Token: {{getNameForID(getProxyForID(item.ID))}}
                       </i>
                     </div>
-                    <img src={{getImageForID(getProxyForName(item.Name))}}
-                      (error)="onImageError($event,getProxyForName(item.Name))" class="jinxIconCol"
+                    <img src={{getImageForID(getProxyForID(item.ID))}}
+                      (error)="onImageError($event,getProxyForID(item.ID))" class="jinxIconCol"
                       style="height:25px; bottom:3px; padding-right:60px; opacity:50%">
                     }
                     </div>
@@ -1194,13 +1203,13 @@
                     }
                     }
                     }
-                    @if(getProxyForName(item.Name) != ''){
+                    @if(getProxyForID(item.ID) != ''){
                     <div class="proxy"><i>
-                        Proxy Token: {{getNameForID(getProxyForName(item.Name))}}
+                        Proxy Token: {{getNameForID(getProxyForID(item.ID))}}
                       </i>
                     </div>
-                    <img src={{getImageForID(getProxyForName(item.Name))}}
-                      (error)="onImageError($event,getProxyForName(item.Name))" class="jinxIcon"
+                    <img src={{getImageForID(getProxyForID(item.ID))}}
+                      (error)="onImageError($event,getProxyForID(item.ID))" class="jinxIcon"
                       style="height:25px; bottom:-3px; padding-right:60px; opacity:50%">
                     }
                   </div>
@@ -1246,13 +1255,13 @@
                     }
                     }
                    
-                    @if(getProxyForName(item.Name) != ''){
+                    @if(getProxyForID(item.ID) != ''){
                     <div class="proxyCol"><i>
-                        Proxy Token: {{getNameForID(getProxyForName(item.Name))}}
+                        Proxy Token: {{getNameForID(getProxyForID(item.ID))}}
                       </i>
                     </div>
-                    <img src={{getImageForID(getProxyForName(item.Name))}}
-                      (error)="onImageError($event,getProxyForName(item.Name))" class="jinxIconCol"
+                    <img src={{getImageForID(getProxyForID(item.ID))}}
+                      (error)="onImageError($event,getProxyForID(item.ID))" class="jinxIconCol"
                       style="height:25px; bottom:3px; padding-right:60px; opacity:50%">
                     }
                     </div>
@@ -1373,7 +1382,7 @@
                 <div>
                   <b>
                     <img src="{{getImageForID(char.ID)}}" (error)="onImageError($event,char.ID)" class="jinxIcon">
-                    {{char.Name}}
+                    {{getNameForID(char.ID)}}
                   </b>
                 </div>
                 <div style="padding-right:0px; padding-left:8px"> → </div>
@@ -1393,7 +1402,7 @@
                 <div>
                   <b>
                     <img src="{{getImageForID(proxies[0].ID)}}" (error)="onImageError($event,proxies[0].ID)" class="jinxIcon">
-                    {{proxies[0].Name}}
+                    {{getNameForID(proxies[0].Name)}}
                   </b>
                 </div>
                 <div style="padding-left:5px"> is the </div>
