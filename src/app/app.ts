@@ -1452,6 +1452,8 @@ loadJson(){
         item.Proxy = '';
         item.ProxyInput = ''
     }
+    this.loadProxies = []
+    this.create()
   }
 
 
