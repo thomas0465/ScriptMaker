@@ -249,7 +249,7 @@ input[type=number]::-webkit-outer-spin-button {
   padding-left:0.15in;
   padding-top:0px;
   position: relative;
-  top: 17px;
+  top: 14px;
   left:-15px;
   height:20px;
   font-size: 3.5mm;
@@ -388,7 +388,7 @@ input[type=number]::-webkit-outer-spin-button {
 .charabilityCol {
   font-family: 'Assi';
   float: right;
-  width:90%;
+  width:95%;
   font-size: 3.2mm;
   line-height: 1.2;
   margin: 0;
