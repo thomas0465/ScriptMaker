@@ -2,6 +2,8 @@ import { AfterViewInit, Component, ElementRef, NgModule, OnInit, ViewChild, Chan
 import { FormsModule } from '@angular/forms';
 import { NgxPrintDirective } from 'ngx-print';
 import { ColorPickerModule } from 'ngx-color-picker';
+import pako from 'pako';
+
 
 
 
@@ -1917,11 +1919,38 @@ loadJson(){
     if (this.fullJsonSplit[0].oneCol) {
       this.oneCol = this.fullJsonSplit[0].oneCol;
     }
-
-
-
-
   }
+
+  openScript(): void {
+  // 1. JSON stringify
+    this.saveParams();
+  
+  let data = this.fullJsonSplit
+
+  const json = JSON.stringify(data, null, 2);
+
+  // 2. UTF-8 encode
+  const uint8 = new TextEncoder().encode(json);
+
+  // 3. GZIP compress (this is the key step)
+  const compressed = pako.gzip(uint8);
+
+  // 4. Convert to base64
+  let binary = "";
+  const chunkSize = 0x8000;
+  for (let i = 0; i < compressed.length; i += chunkSize) {
+    binary += String.fromCharCode(...compressed.subarray(i, i + chunkSize));
+  }
+  const base64 = btoa(binary);
+
+  // 5. URL encode
+  const encoded = encodeURIComponent(base64);
+
+    // 6. open instantly
+    const url = `https://script.bloodontheclocktower.com/?script=${encoded}`;
+    window.open(url, '_blank');
+  }
+
 
   //data
 
