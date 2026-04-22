@@ -352,7 +352,8 @@ input[type=number]::-webkit-outer-spin-button {
   gap: 0mm;
   padding-top: 0px;
     position: relative;
-  bottom:-3px;
+  bottom:0px;
+  right:-10px;
   margin-left: auto;
   color: rgb(83, 83, 83);
 }
@@ -365,10 +366,47 @@ input[type=number]::-webkit-outer-spin-button {
 
   padding-top: 0px;
     position: relative;
-  bottom:5px;
+  bottom:8px;
+  right:15px;
   margin: -10px  0px -10px 0px;
 
   color: rgb(83, 83, 83);
+}
+
+.proxyRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: 0px solid red;
+  margin: -20px 0px -15px 0px;
+}
+
+.proxyIcon{
+  float: left;
+  height: 35px;
+  position: relative;
+  border: 0px solid red;
+  margin: -10px 0px -10px 0px;
+  height:25px; 
+  bottom:0px; 
+  right:-10px; 
+  padding-right:60px;
+  opacity:50%
+
+}
+
+.proxyIconCol {
+  float: right;
+  height: 22px;
+  position: relative;
+  bottom:6px;
+  border: 0px solid red;
+  margin: -10px 0px -10px 0px;
+  height:25px; 
+  bottom:6px; 
+  right:15px;
+  padding-right:60px; 
+  opacity:50%
 }
 
 
@@ -657,14 +695,6 @@ input[type=number]::-webkit-outer-spin-button {
   padding-left: 10px;
   padding-top: 0px;
 
-}
-
-.proxyRow {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  border: 0px solid red;
-  margin: -20px 0px -15px 0px;
 }
 
 .divRowPage2 {
