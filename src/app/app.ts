@@ -1922,32 +1922,33 @@ loadJson(){
   }
 
   openScript(): void {
-  // 1. JSON stringify
-    this.saveParams();
-  
-  let data = this.fullJsonSplit
+    //JSON
+      this.saveParams();
+    
+    let data = this.fullJsonSplit
 
-  const json = JSON.stringify(data, null, 2);
+    const json = JSON.stringify(data, null, 2);
 
-  // 2. UTF-8 encode
-  const uint8 = new TextEncoder().encode(json);
+    //UTF-8 encode
+    const uint8 = new TextEncoder().encode(json);
 
-  // 3. GZIP compress (this is the key step)
-  const compressed = pako.gzip(uint8);
+    //GZIP compress
+    const compressed = pako.gzip(uint8);
 
-  // 4. Convert to base64
-  let binary = "";
-  const chunkSize = 0x8000;
-  for (let i = 0; i < compressed.length; i += chunkSize) {
-    binary += String.fromCharCode(...compressed.subarray(i, i + chunkSize));
-  }
-  const base64 = btoa(binary);
+    //Convert to base64 url
+    let binary = "";
+    const chunkSize = 0x8000;
+    for (let i = 0; i < compressed.length; i += chunkSize) {
+      binary += String.fromCharCode(...compressed.subarray(i, i + chunkSize));
+    }
+    const base64 = btoa(binary);
 
-  // 5. URL encode
-  const encoded = encodeURIComponent(base64);
+    //URL encode
+    const encoded = encodeURIComponent(base64);
 
-    // 6. open instantly
+    //open link
     const url = `https://script.bloodontheclocktower.com/?script=${encoded}`;
+
     window.open(url, '_blank');
   }
 
