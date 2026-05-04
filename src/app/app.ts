@@ -1487,7 +1487,13 @@ loadJson(){
   }
 
   getIDForName(inputName: string): string {
-    const match = this.charData.find(item => item.Name === inputName);
+  const normalized = inputName.trim().toLowerCase();
+
+  const match = this.charData.find(item => {
+    const name = item.Name;
+
+    return name?.trim().toLowerCase() === normalized;
+  });
 
     return match ? match.ID : "none";
   }
