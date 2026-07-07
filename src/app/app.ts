@@ -3349,22 +3349,22 @@ loadJson(){
       {
         "char1": "mathematician",
         "char2": "drunk",
-        "reason": "The Mathematician might learn if the Drunk's ability yielded false info or failed to work properly."
+        "reason": "The Mathematician learns if the Drunk's ability yielded false info or failed to work properly."
       },
       {
         "char1": "mathematician",
         "char2": "lunatic",
-        "reason": "The Mathematician might learn if the Lunatic attacks a different player than the real Demon attacked."
+        "reason": "The Mathematician learns if the Lunatic attacks a different player than the real Demon attacked."
       },
       {
         "char1": "mathematician",
         "char2": "marionette",
-        "reason": "The Mathematician might learn if the Marionette's ability yielded false info or failed to work properly."
+        "reason": "The Mathematician learns if the Marionette's ability yielded false info or failed to work properly."
       },
       {
         "char1": "magician",
         "char2": "legion",
-        "reason": "The Magician wakes with Legion and might register as evil. Legion knows if a Magician is in play, but not which player it is."
+        "reason": "If the Magician is in play, during the Demon info step, Legion wake in separate groups. Each group learns which players are good, but does not learn the Magician."
       },
       {
         "char1": "magician",
