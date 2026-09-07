@@ -30,10 +30,11 @@
             <div class="d-flex flex-row">
               <div class="col-4">
                 <button class="btn btn-secondary btn-lg btn-group w-100" (click)="saveJson()" data-toggle="tooltip"
-                  title="Save JSON with current settings, except custom image link and font">Save JSON with settings</button>
+                  title="Save JSON with current settings, except custom image link and font">Save JSON with
+                  settings</button>
               </div>
               <div class="ms-1 col-4">
-                <button class="btn btn-secondary btn-lg btn-group w-100" (click)="openScript()"data-toggle="tooltip"
+                <button class="btn btn-secondary btn-lg btn-group w-100" (click)="openScript()" data-toggle="tooltip"
                   title="Open script in the official Botc script tool">
                   Open in Script Tool
                 </button>
@@ -351,6 +352,26 @@
             </div>
           </div>
 
+          <div class="col">
+            <div class="form-check form-switch ps-5 mt-2">
+              <input class="form-check-input fs-5" type="checkbox" id="townsfolkSpacing"
+                [(ngModel)]="townsfolkSpacing" (ngModelChange)="create()">
+              <label class="form-check-label fs-4" for="townsfolkSpacing">
+                Flex Townsfolk spacing
+              </label>
+            </div>
+          </div>
+
+
+          <div class="col">
+            <div class="form-check form-switch ps-5 mt-2">
+              <input class="form-check-input fs-5" type="checkbox" id="townsfolkLastOnRight"
+                [(ngModel)]="townsfolkLastOnRight" (ngModelChange)="create()">
+              <label class="form-check-label fs-4" for="townsfolkLastOnRight">
+                Put more townsfolk on right column
+              </label>
+            </div>
+          </div>
 
           <div class="col">
             <div class="form-check form-switch ps-5 mt-2">
@@ -850,9 +871,12 @@
               </div>
 
 
-              @for (item of townsfolkPage1; track item) {
+              @for (item of townsfolkPage1; track item; let i = $index) {
               @if(!oneCol){
-              <div class="charRow" style="float: left;">
+              <div class="charRow"
+                [class.townsfolkRightOnly]="townsfolkLastOnRight && i === townsfolkPage1.length - 1 && townsfolkPage1.length % 2 !== 0"
+                style="float: left;" #townsfolkRow
+                [style.top.px]="getTownsfolkShortColumnOffset(i)">
                 <div class="charImageContainer">
                   <img src={{item.Image}} class="charImage" (error)="onImageError($event,item.ID)">
                 </div>

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, NgModule, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { AfterViewInit, AfterViewChecked, Component, ElementRef, NgModule, OnInit, ViewChild, ViewChildren, QueryList, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgxPrintDirective } from 'ngx-print';
 import { ColorPickerModule } from 'ngx-color-picker';
@@ -15,7 +15,7 @@ import pako from 'pako';
 })
 
 
-export class App implements OnInit, AfterViewInit {
+export class App implements OnInit, AfterViewInit, AfterViewChecked {
   @ViewChild('TitleElement') TitleElement!: ElementRef;
   @ViewChild('AuthorElement') AuthorElement!: ElementRef;
 
@@ -122,6 +122,9 @@ export class App implements OnInit, AfterViewInit {
   wordSpacingInput: number = 0
   wordSpacing: string = '0px'
 
+  townsfolkSpacing: boolean = true;
+  townsfolkLastOnRight: boolean = false;
+
 
 
   townsfolk: {
@@ -160,8 +163,124 @@ export class App implements OnInit, AfterViewInit {
     Team: string,
     Image: string
   }[] = []
+
+  // Vertical offsets applied to the shorter townsfolk column when the
+  // number of townsfolk is odd. The offsets spread the shorter column
+  // so that it fills the same vertical space as the longer column.
+  // Index = position within the shorter column (0-based).
+  townsfolkShortColumnOffsets: number[] = []
+  private townsfolkSpacingDirty = false
+
+  @ViewChildren('townsfolkRow') townsfolkRowRefs!: QueryList<ElementRef>
+
+  getTownsfolkShortColumnOffset(flatIndex: number): number | null {
+    if(this.townsfolkSpacing == false){
+      return 0;
+    }
+    const n = this.townsfolk.length
+
+    if (n % 2 === 0 || n <= 5) {
+      return null
+    }
+
+    // Normal layout: the right column is the shorter column.
+    if (!this.townsfolkLastOnRight) {
+      if (flatIndex % 2 !== 1) {
+        return null
+      }
+
+      const pos = (flatIndex - 1) / 2
+      return this.townsfolkShortColumnOffsets[pos] ?? null
+    }
+
+    // Alternate layout: the left column is the shorter column.
+    if (flatIndex % 2 !== 0) {
+      return null
+    }
+
+    const pos = flatIndex / 2
+    return this.townsfolkShortColumnOffsets[pos] ?? null
+  }
+
+  private recomputeTownsfolkSpacing() {
+    const n = this.townsfolk.length
+    const uneven = n % 2 === 1 && n > 5
+
+    if (!uneven || !this.townsfolkRowRefs || this.townsfolkRowRefs.length !== n) {
+      if (this.townsfolkShortColumnOffsets.length) {
+        this.townsfolkShortColumnOffsets = []
+        this.cd.detectChanges()
+      }
+      return
+    }
+
+    const rows = this.townsfolkRowRefs.toArray()
+
+    let shortColumnLastIndex: number
+    let tallColumnLastIndex: number
+
+    if (this.townsfolkLastOnRight) {
+      // 13 townsfolk: left = 0..5, right = 6..12
+      shortColumnLastIndex = n - 3
+      tallColumnLastIndex = n - 1
+    } else {
+      // 13 townsfolk: left = 0..6, right = 7..12
+      shortColumnLastIndex = n - 2
+      tallColumnLastIndex = n - 1
+    }
+
+    const shortLastEl = rows[shortColumnLastIndex].nativeElement as HTMLElement
+    const tallLastEl = rows[tallColumnLastIndex].nativeElement as HTMLElement
+
+    const deficit =
+      tallLastEl.getBoundingClientRect().bottom -
+      shortLastEl.getBoundingClientRect().bottom
+
+    if (deficit <= 0) {
+      return
+    }
+
+    const shortCount = Math.floor(n / 2)
+
+    if (shortCount < 2) {
+      return
+    }
+
+    const increment = deficit / (shortCount - 1)
+    const offsets: number[] = []
+
+    for (let pos = 0; pos < shortCount; pos++) {
+      offsets.push(Math.round(pos * increment))
+    }
+
+    this.townsfolkShortColumnOffsets = offsets
+    this.cd.detectChanges()
+  }
+
+  reorderTownsfolkForColumns(array: any[]): any[] {
+    if (!this.townsfolkLastOnRight || array.length % 2 === 0 || array.length <= 5) {
+      return this.reorderForColumns(array)
+    }
+
+    const result: any[] = []
+    const shortColumnCount = Math.floor(array.length / 2)
+
+    // Interleave the six left-column characters with the first six
+    // right-column characters, then put the final character at the
+    // bottom of the right column.
+    for (let row = 0; row < shortColumnCount; row++) {
+      result.push(array[row])
+      result.push(array[shortColumnCount + row])
+    }
+
+    result.push(array[array.length - 1])
+
+    return result
+  }
+
   outsidersPage1: {
     ID: string,
+
     Name: string,
     Ability: string,
     Team: string,
@@ -289,6 +408,15 @@ export class App implements OnInit, AfterViewInit {
 
   }
 
+  ngAfterViewChecked() {
+    if (this.townsfolkSpacingDirty) {
+      this.townsfolkSpacingDirty = false
+      //defer to the next tick so the DOM has settled from this check
+      //before we measure and apply the computed offsets
+      setTimeout(() => this.recomputeTownsfolkSpacing())
+    }
+  }
+
   reset() {
     this.invertOther = false;
     this.showPlayerCount = true;
@@ -326,6 +454,9 @@ export class App implements OnInit, AfterViewInit {
     this.lowAuthor = false
     this.titleWidth = 'auto'
     this.oneCol = false;
+
+    this.townsfolkSpacing = true;
+    this.townsfolkLastOnRight = false;
 
     this.proxies = [];
     this.hbmark = ''
@@ -973,7 +1104,9 @@ loadJson(){
     //get list of townsfolk
     this.townsfolk = this.setcharacters(this.townsfolk, "townsfolk")
 
-    this.townsfolkPage1 = this.reorderForColumns(this.townsfolk)
+    this.townsfolkPage1 = this.reorderTownsfolkForColumns(this.townsfolk)
+    this.townsfolkShortColumnOffsets = []
+    this.townsfolkSpacingDirty = true
 
 
     //get list of outsiders
@@ -1800,6 +1933,18 @@ loadJson(){
             delete this.fullJsonSplit[0]["oneCol"] 
     }
 
+    if(this.townsfolkLastOnRight){
+      this.fullJsonSplit[0]["townsfolkLastOnRight"] = this.townsfolkLastOnRight
+    }else{
+      delete this.fullJsonSplit[0]["townsfolkLastOnRight"]
+    }
+
+    if(this.townsfolkSpacing !== true){
+      this.fullJsonSplit[0]["townsfolkSpacing"] = this.townsfolkSpacing
+    }else{
+      delete this.fullJsonSplit[0]["townsfolkSpacing"]
+    }
+
   }
 
 
@@ -1924,6 +2069,14 @@ loadJson(){
 
     if (this.fullJsonSplit[0].oneCol) {
       this.oneCol = this.fullJsonSplit[0].oneCol;
+    }
+
+    if (this.fullJsonSplit[0].townsfolkLastOnRight) {
+      this.townsfolkLastOnRight = this.fullJsonSplit[0].townsfolkLastOnRight;
+    }
+
+    if (this.fullJsonSplit[0].townsfolkSpacing !== undefined) {
+      this.townsfolkSpacing = this.fullJsonSplit[0].townsfolkSpacing;
     }
   }
 
