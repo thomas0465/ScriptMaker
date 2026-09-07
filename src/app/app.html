@@ -375,6 +375,14 @@
 
           <div class="col">
             <div class="form-check form-switch ps-5 mt-2">
+              <input class="form-check-input fs-5" type="checkbox" id="showLogo" [(ngModel)]="showLogo"
+                (ngModelChange)="create()">
+              <label class="form-check-label fs-4" for="showLogo">Show logo if available</label>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="form-check form-switch ps-5 mt-2">
               <input class="form-check-input fs-5" type="checkbox" id="showDjinn" [(ngModel)]="showDjinn"
                 (ngModelChange)="create()">
               <label class="form-check-label fs-4" for="showDjinn">Show Djinn on script</label>
@@ -778,28 +786,57 @@
 
 
                   <!----Name and Author-->
-                  <div class="d-flex" style="position:relative; border:0px red solid" [style.left]="titleOffset"
-                    [style.width]="titleWidth">
-                    <div #TitleElement class="ScriptName" [style.font-family]="currentFont || 'Philo'"
-                      [style.color]="scriptNameColor" [style.font-size]="scriptFontSize"
-                      [style.word-spacing]="wordSpacing">
-                      {{scriptName}}
-                    </div>
+                  <div class="d-flex" style="position: relative;">
 
-                    @if (author && !lowAuthor){
-                    <div #AuthorElement class="Author" [style.font-family]="currentFontAuthor || 'Philo'"
-                      [style.color]="scriptNameColor" [style.font-size]="authorFontSize" [style.bottom]="authorOffset">
-                      <div class="AuthorText">
-                        @if(italicAuthor){
-                        <i>by {{author}}</i>
-                        }
-                        @if(!italicAuthor){
-                        by {{author}}
-                        }
+  @if(showLogo){
+    <img
+      [src]="logo"
+      style="position: absolute; left: 15px;"
+      [style.height]="'calc(' + scriptFontSize + ' * 1.4)'"
+      #LogoElement
+      (load)="updateCSS()">
+  }
 
-                      </div>
-                    </div>
-                    }
+  <div
+    class="d-flex"
+    style="position: relative; border: 0px red solid"
+    [style.left]="titleOffset"
+    [style.width]="titleWidth">
+
+    <div
+      #TitleElement
+      class="ScriptName"
+      [style.font-family]="currentFont || 'Philo'"
+      [style.color]="scriptNameColor"
+      [style.font-size]="scriptFontSize"
+      [style.word-spacing]="wordSpacing">
+      {{scriptName}}
+    </div>
+
+    @if (author && !lowAuthor){
+      <div
+        #AuthorElement
+        class="Author"
+        [style.font-family]="currentFontAuthor || 'Philo'"
+        [style.color]="scriptNameColor"
+        [style.font-size]="authorFontSize"
+        [style.bottom]="authorOffset">
+
+        <div class="AuthorText">
+          @if(italicAuthor){
+            <i>by {{author}}</i>
+          }
+          @if(!italicAuthor){
+            by {{author}}
+          }
+        </div>
+
+      </div>
+    }
+
+  </div>
+
+
 
 
 

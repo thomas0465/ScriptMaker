@@ -18,6 +18,7 @@ import pako from 'pako';
 export class App implements OnInit, AfterViewInit, AfterViewChecked {
   @ViewChild('TitleElement') TitleElement!: ElementRef;
   @ViewChild('AuthorElement') AuthorElement!: ElementRef;
+  @ViewChild('LogoElement') LogoElement!: ElementRef;
 
   jsonInput: string = '';
   scriptName: string = '';
@@ -124,6 +125,9 @@ export class App implements OnInit, AfterViewInit, AfterViewChecked {
 
   townsfolkSpacing: boolean = true;
   townsfolkLastOnRight: boolean = false;
+
+  logo: string = ""
+  showLogo: boolean = true;
 
 
 
@@ -919,6 +923,12 @@ loadJson(){
   create() {
     this.loadJson()
 
+    if(this.fullJsonSplit[0].logo){
+      this.logo = this.fullJsonSplit[0].logo
+    }else{
+      this.logo = ""
+    }
+
     //Set fonts
     if (this.titleFont && this.fontName) {
       this.currentFont = this.fontName;
@@ -1500,21 +1510,32 @@ loadJson(){
     }
 
     //if title is centered
-    if (this.centerTitle && this.TitleElement) {
-      this.titleOffset = 390 - (this.TitleElement.nativeElement.offsetWidth / 2) + 'px'
+if (this.centerTitle && this.TitleElement) {
 
-      if(this.AuthorElement){
-        this.authorLowOffset = 390 - (this.AuthorElement.nativeElement.offsetWidth / 2) + 'px'
-      }
+  this.titleOffset =
+    390 - (this.TitleElement.nativeElement.offsetWidth / 2) + 'px';
 
-      this.titleWidth = 390 + (this.TitleElement.nativeElement.offsetWidth / 2) + 'px'
+  if (this.AuthorElement) {
+    this.authorLowOffset =
+      390 - (this.AuthorElement.nativeElement.offsetWidth / 2) + 'px';
+  }
 
-    } else {
-      //if title left aligned
-      this.titleOffset = '0px'
-      this.authorLowOffset = '10px'
-      this.titleWidth = 'auto'
-    }
+  this.titleWidth =
+    390 + (this.TitleElement.nativeElement.offsetWidth / 2) + 'px';
+
+} else {
+
+  this.titleOffset =
+    (this.showLogo
+      ? this.LogoElement.nativeElement.offsetWidth + 15
+      : 0) + 'px';
+
+  this.authorLowOffset =    
+    (this.showLogo
+        ? this.LogoElement.nativeElement.offsetWidth + 25
+        : 10) + 'px';
+  this.titleWidth = 'auto';
+}
 
     //offsets for player count and icon row
     //if icons above and player count visible
@@ -1945,6 +1966,12 @@ loadJson(){
       delete this.fullJsonSplit[0]["townsfolkSpacing"]
     }
 
+    if(this.showLogo !== true){
+      this.fullJsonSplit[0]["showLogo"] = this.showLogo
+    }else{
+      delete this.fullJsonSplit[0]["showLogo"]
+    }
+
   }
 
 
@@ -2077,6 +2104,10 @@ loadJson(){
 
     if (this.fullJsonSplit[0].townsfolkSpacing !== undefined) {
       this.townsfolkSpacing = this.fullJsonSplit[0].townsfolkSpacing;
+    }
+
+    if (this.fullJsonSplit[0].showLogo !== undefined) {
+      this.showLogo = this.fullJsonSplit[0].showLogo;
     }
   }
 
